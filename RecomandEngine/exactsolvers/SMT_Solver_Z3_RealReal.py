@@ -70,7 +70,6 @@ class Z3_Solver(ManeuverProblem):
 
         #If a machine is not leased then its price is 0
         for j in range(self.nrVM):
-           # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
            self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0.0, self.PriceProv[j] == 0.0))
 
         # encode offers
@@ -289,6 +288,7 @@ class Z3_Solver(ManeuverProblem):
         """
         for j in range(self.nrVM):
             if self.solverTypeOptimize:
+
                 self.solver.add(
                     (sum([self.a[alphaCompId * self.nrVM + j]]+[self.a[_compId * self.nrVM + j] for _compId in notInConflictCompsIdList]))
                     ==

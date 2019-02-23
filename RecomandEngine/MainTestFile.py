@@ -45,7 +45,7 @@ def runZ3Once(problem_file_name, configurations_file_name, solver):
     with open(outcsv, 'w', newline='') as csvfile:
         fwriter = csv.writer(csvfile, delimiter=',', )
         fwriter.writerow(['Price min value', 'Price for each machine', 'Time'])
-        for it in range(2):
+        for it in range(1):
             mp = ManeuverProblem()
             try:
                 mp.readConfiguration(problem_file_name)
@@ -62,9 +62,12 @@ def runZ3Once(problem_file_name, configurations_file_name, solver):
         csvfile.close()
 
 if __name__ == "__main__":
-    runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+
+    runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+              "SMT_Solver_Z3_PBC")
+    runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
               "SMT_Solver_Z3_RealReal")
-    ######################
+    # ######################
     # SecureWebContainer #
     ######################
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json", "SMT_Solver_Z3_IntIntOr")
