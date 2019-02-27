@@ -504,11 +504,12 @@ class Z3_Solver(ManeuverProblem):
         :param fileName: string representing the file name storing the SMT2LIB formulation of the problem
         :return:
         """
-        #with open(fileName, 'w+') as fo:
-        #   fo.write("(set-logic QF_LRA)\n") # quantifier free linear integer-real arithmetic
-        #fo.close()
-
         with open(fileName, 'w+') as fo:
+           fo.write("(set-option :sat.pb.solver true)\n")
+           fo.write("(set-option :sat.cardinality.solver true)\n")
+        fo.close()
+
+        with open(fileName, 'a+') as fo:
             fo.write(self.solver.sexpr())
         fo.close()
 
