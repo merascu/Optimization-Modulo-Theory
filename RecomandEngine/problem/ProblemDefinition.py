@@ -43,8 +43,9 @@ class ManeuverProblem:
             from RecomandEngine.exactsolvers import SMT_Solver_Z3_BV
             SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
         elif solver == "SMT_Solver_Z3_IntIntLessThan":
-            from RecomandEngine.exactsolvers import SMT_Solver_Z3_RealBool
-            SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+            from RecomandEngine.exactsolvers import SMT_Solver_Z3_IntIntLessThan
+            SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self,
+                                                                   solver_type)
         elif solver == "SMT_Solver_Z3_IntIntOr":
             from RecomandEngine.exactsolvers import SMT_Solver_Z3_IntIntOr
             SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -54,9 +55,9 @@ class ManeuverProblem:
         elif solver == "SMT_Solver_Z3_RealReal":
             from RecomandEngine.exactsolvers import SMT_Solver_Z3_RealReal
             SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-        elif solver == "SMT_Solver_Z3_PBC":
-            from RecomandEngine.exactsolvers import SMT_Solver_Z3_PBC
-            SMTSolver = SMT_Solver_Z3_PBC.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        elif solver == "SMT_Solver_Z3_PBCBV":
+            from RecomandEngine.exactsolvers import SMT_Solver_Z3_PBCBV
+            SMTSolver = SMT_Solver_Z3_PBCBV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
         elif solver == "SMT_Solver_Z3_RealSymBreak":
             from RecomandEngine.exactsolvers import SMT_Solver_Z3_RealSymBreak
             SMTSolver = SMT_Solver_Z3_RealSymBreak.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)

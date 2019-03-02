@@ -438,6 +438,8 @@ class Z3_Solver(ManeuverProblem):
         # self.problem.logger.debug("tmp:{}".format(tmp))
 
 
+
+
     def run(self, smt2lib, smt2libsol):
         """
         Invokes the solving of the problem (solution and additional effect like creation of special files)
