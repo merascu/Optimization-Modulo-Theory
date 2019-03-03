@@ -45,10 +45,10 @@ class Z3_Solver(ManeuverProblem):
         self.VMType = {}
 
         # values from availableConfigurations
-        self.ProcProv = [Int('ProcProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.MemProv = [Int('MemProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.StorageProv = [Int('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.PriceProv = [Int('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.ProcProv = [Real('ProcProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.MemProv = [Real('MemProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.StorageProv = [Real('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.PriceProv = [Real('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
 
         #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
         # elements of VM should be positive
@@ -62,7 +62,7 @@ class Z3_Solver(ManeuverProblem):
         #     self.solver.add(Or([self.a[i] == 0, self.a[i] == 1]))
         # #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
 
-        self.vmType = [Int('VM%iType' % j) for j in range(1, self.nrVM + 1)]
+        self.vmType = [Real('VM%iType' % j) for j in range(1, self.nrVM + 1)]
         # vmType is one of the types from availableConfigurations
         for i in range(len(self.vmType)):
             lst = [self.vmType[i] == t for t in range(1, len(self.availableConfigurations) + 1)]
