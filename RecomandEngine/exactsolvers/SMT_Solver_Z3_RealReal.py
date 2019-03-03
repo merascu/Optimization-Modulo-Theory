@@ -70,6 +70,7 @@ class Z3_Solver(ManeuverProblem):
 
         #If a machine is not leased then its price is 0
         for j in range(self.nrVM):
+           # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
            self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0.0, self.PriceProv[j] == 0.0))
 
         # encode offers
@@ -232,7 +233,7 @@ class Z3_Solver(ManeuverProblem):
             else:
                 self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= bound
                 self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) <= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == ">=":
             if self.solverTypeOptimize:
@@ -241,7 +242,7 @@ class Z3_Solver(ManeuverProblem):
             else:
                 self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound
                 self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) >= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == "=":
             if self.solverTypeOptimize:

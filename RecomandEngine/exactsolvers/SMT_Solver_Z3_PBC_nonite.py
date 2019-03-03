@@ -45,10 +45,10 @@ class Z3_Solver(ManeuverProblem):
         self.VMType = {}
 
         # values from availableConfigurations
-        self.ProcProv = [Real('ProcProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.MemProv = [Real('MemProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.StorageProv = [Real('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.PriceProv = [Real('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.ProcProv = [Int('ProcProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.MemProv = [Int('MemProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.StorageProv = [Int('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.PriceProv = [Int('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
 
         #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
         # elements of VM should be positive
@@ -62,7 +62,7 @@ class Z3_Solver(ManeuverProblem):
         #     self.solver.add(Or([self.a[i] == 0, self.a[i] == 1]))
         # #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
 
-        self.vmType = [Real('VM%iType' % j) for j in range(1, self.nrVM + 1)]
+        self.vmType = [Int('VM%iType' % j) for j in range(1, self.nrVM + 1)]
         # vmType is one of the types from availableConfigurations
         for i in range(len(self.vmType)):
             lst = [self.vmType[i] == t for t in range(1, len(self.availableConfigurations) + 1)]
@@ -71,7 +71,7 @@ class Z3_Solver(ManeuverProblem):
         #If a machine is not leased then its price is 0
         for j in range(self.nrVM):
             bvars = [self.a[i + j] for i in range(0, len(self.a), self.nrVM)]
-            self.solver.add(Implies(PbEq([(x, 1) for x in bvars], 0), self.PriceProv[j] == 0.0))
+            self.solver.add(Implies(PbEq([(x, 1) for x in bvars], 0), self.PriceProv[j] == 0))
 
         # encode offers
         for t in range(len(self.availableConfigurations)):
@@ -80,18 +80,18 @@ class Z3_Solver(ManeuverProblem):
                     bvars = [self.a[i+j] for i in range(0, len(self.a), self.nrVM)]
 
                     self.solver.add(Implies(And(PbGe([(x, 1) for x in bvars], 1), self.vmType[j] == t+1),
-                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]/1000.),
-                                self.ProcProv[j] == self.availableConfigurations[t][1]/1.,
-                                self.MemProv[j] == (self.availableConfigurations[t][2]/1000.),
-                                self.StorageProv[j] == (self.availableConfigurations[t][3]/1000.)
+                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]),
+                                self.ProcProv[j] == self.availableConfigurations[t][1],
+                                self.MemProv[j] == (self.availableConfigurations[t][2]),
+                                self.StorageProv[j] == (self.availableConfigurations[t][3])
                                 )
                             ))
                 else:
                     self.solver.assert_and_track(Implies(And(PbGe([(x, 1) for x in bvars], 1), self.vmType[j] == t+1),
-                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]/1000.),
-                                self.ProcProv[j] == self.availableConfigurations[t][1]/1.,
-                                self.MemProv[j] == (self.availableConfigurations[t][2]/1000.),
-                                self.StorageProv[j] == (self.availableConfigurations[t][3]/1000.)
+                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]),
+                                self.ProcProv[j] == self.availableConfigurations[t][1],
+                                self.MemProv[j] == (self.availableConfigurations[t][2]),
+                                self.StorageProv[j] == (self.availableConfigurations[t][3])
                                 )
                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
@@ -417,42 +417,47 @@ class Z3_Solver(ManeuverProblem):
         self.problem.logger.debug("constraintsHardware: componentsRequirements={}".format(componentsRequirements))
         componentsRequirements = [[0 if i is None else i for i in line] for line in componentsRequirements]
 
+        self.p = [Int('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([If(self.a[i * self.nrVM + k], 1.0, 0.0) * componentsRequirements[i][0]/1.
-                            for i in range(self.nrComp)]) <= self.ProcProv[k])
+            pLst = []
+            for i in range(self.nrComp):
+                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+                                        0 == self.p[i * self.nrVM + k]))
+                self.solver.add(Implies(self.a[i * self.nrVM + k],
+                                        self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
+                pLst.append(self.p[i * self.nrVM + k])
+            tmp.append(sum(pLst) <= self.ProcProv[k])
+            self.solver.minimize(sum(pLst))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
-        self.problem.logger.debug("tmp:{}".format(tmp))
 
+        self.m = [Int('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([If(self.a[i * self.nrVM + k], 1.0, 0.0) * (componentsRequirements[i][1]/1000.)
-                            for i in range(self.nrComp)]) <= self.MemProv[k])
+            mLst = []
+            for i in range(self.nrComp):
+                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+                                        0 == self.m[i * self.nrVM + k]))
+                self.solver.add(Implies(self.a[i * self.nrVM + k],
+                                        self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
+                mLst.append(self.m[i * self.nrVM + k])
+            tmp.append(sum(mLst) <= self.MemProv[k])
+            self.solver.minimize(sum(mLst))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
-        self.problem.logger.debug("tmp:{}".format(tmp))
 
+        self.s = [Int('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([If(self.a[i * self.nrVM + k], 1.0, 0.0) * (componentsRequirements[i][2]/1000.)
-                            for i in range(self.nrComp)]) <= self.StorageProv[k])
+            sLst = []
+            for i in range(self.nrComp):
+                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+                                        0 == self.s[i * self.nrVM + k]))
+                self.solver.add(Implies(self.a[i * self.nrVM + k],
+                                        self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
+                sLst.append(self.s[i * self.nrVM + k])
+            tmp.append(sum(sLst) <= self.StorageProv[k])
+            self.solver.minimize(sum(sLst))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
-        # self.problem.logger.debug("tmp:{}".format(tmp))
-
 
     def run(self, smt2lib, smt2libsol):
         """
@@ -463,13 +468,13 @@ class Z3_Solver(ManeuverProblem):
         """
 
         if self.solverTypeOptimize:
-            self.PriceProv = [Real('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
             opt = sum(self.PriceProv)
             min = self.solver.minimize(opt)
 
         self.createSMT2LIBFile(smt2lib)
 
         startime = time.time()
+        self.solver.set()
         status = self.solver.check()
         stoptime = time.time()
 
@@ -491,12 +496,12 @@ class Z3_Solver(ManeuverProblem):
                 print(l)
             ll = []
             for k in range(self.nrVM):
-                ll.append(model[self.PriceProv[k]])
+                ll.append(model[self.PriceProv[k]]/1000.)
             print("Price for each machine")
             print(ll)
 
         self.createSMT2LIBFileSolution(smt2libsol, status, model)
-        return min.value(), ll, stoptime - startime
+        return min.value()/1000., ll, stoptime - startime
 
     def createSMT2LIBFile(self, fileName):
         """
@@ -504,10 +509,10 @@ class Z3_Solver(ManeuverProblem):
         :param fileName: string representing the file name storing the SMT2LIB formulation of the problem
         :return:
         """
-        with open(fileName, 'w+') as fo:
-           fo.write("(set-option :sat.pb.solver true)\n")
-           fo.write("(set-option :sat.cardinality.solver true)\n")
-        fo.close()
+        # with open(fileName, 'w+') as fo:
+        #    fo.write("(set-option :sat.pb.solver true)\n")
+        #    fo.write("(set-option :sat.cardinality.solver true)\n")
+        # fo.close()
 
         with open(fileName, 'a+') as fo:
             fo.write(self.solver.sexpr())
