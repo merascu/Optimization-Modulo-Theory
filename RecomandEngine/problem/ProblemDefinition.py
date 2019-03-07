@@ -78,29 +78,6 @@ class ManeuverProblem:
 
         return SMTSolver.run(smt2lib, smt2libsol)
 
-    def solveCP(self, choosing_stategy, solutions_limit, optimize_price, available_configurations, time_limit):
-        """
-        Start solving the problem using the chosen solver and available configurations for VM
-        :param cpSolver: Solver choosed to solve the problem
-        :return:
-        """
-        self.logger.info("Resolve problem using CP solver ")
-        from RecomandEngine.exactsolvers import CP_Solver_GOT
-        cpSolver = CP_Solver_GOT.CP_Solver_Got(self, choosing_stategy, solutions_limit, optimize_price,
-                                               available_configurations, time_limit, self.nrVM)
-
-        # cpSolver = CP_Solver_GOT.CP_Solver_Got(self, choosing_stategy, 2, False,
-        #                                                                         None, 10000)
-
-        self.restrictionsList.append(RestrictionHardware(self._getComponentsHardwareRestrictions(),
-                                                         cpSolver.availableConfig, self))
-
-        for restriction in self.restrictionsList:
-            restriction.generateRestrictions(cpSolver)
-
-        return cpSolver.run()
-
-
     def findPartitionsBasedOnConflictsMatrix(self):# inspired from tarjan algorithm
 
         visitedComponents = {}

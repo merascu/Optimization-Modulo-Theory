@@ -88,15 +88,15 @@ class Z3_Solver(ManeuverProblem):
                             ))
                 else:
                     self.solver.assert_and_track(Implies(And(PbGe([(x, 1) for x in bvars], 1), self.vmType[j] == t+1),
-                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]/1000.),
-                                self.ProcProv[j] == self.availableConfigurations[t][1]/1.,
-                                self.MemProv[j] == (self.availableConfigurations[t][2]/1000.),
-                                self.StorageProv[j] == (self.availableConfigurations[t][3]/1000.)
+                            And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]),
+                                self.ProcProv[j] == self.availableConfigurations[t][1],
+                                self.MemProv[j] == (self.availableConfigurations[t][2]),
+                                self.StorageProv[j] == (self.availableConfigurations[t][3])
                                 )
                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
 
-        # not needed If a machine is leased then its assignment vector is 1
+        # not needed If a machine zis leased then its assignment vector is 1
         # for j in range(self.nrVM):
         #     if self.solverTypeOptimize:
         #         self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1))
@@ -417,13 +417,15 @@ class Z3_Solver(ManeuverProblem):
         self.problem.logger.debug("constraintsHardware: componentsRequirements={}".format(componentsRequirements))
         componentsRequirements = [[0 if i is None else i for i in line] for line in componentsRequirements]
 
+        # ITE version - ProcProv
         tmp = []
         for k in range(self.nrVM):
             tmp.append(sum([If(self.a[i * self.nrVM + k], 1, 0) * componentsRequirements[i][0]
                             for i in range(self.nrComp)]) <= self.ProcProv[k])
         self.solver.add(tmp)
         self.problem.logger.debug("tmp:{}".format(tmp))
-
+        #
+        # # ITE version - MemProv
         tmp = []
         for k in range(self.nrVM):
             tmp.append(sum([If(self.a[i * self.nrVM + k], 1, 0) * (componentsRequirements[i][1])
@@ -431,12 +433,61 @@ class Z3_Solver(ManeuverProblem):
         self.solver.add(tmp)
         self.problem.logger.debug("tmp:{}".format(tmp))
 
+        # # ITE version - StorageProv
         tmp = []
         for k in range(self.nrVM):
             tmp.append(sum([If(self.a[i * self.nrVM + k], 1, 0) * (componentsRequirements[i][2])
                             for i in range(self.nrComp)]) <= self.StorageProv[k])
         self.solver.add(tmp)
         self.problem.logger.debug("tmp:{}".format(tmp))
+
+        # non-ITE version - ProcProv
+        self.p = [Real('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        tmp = []
+        for k in range(self.nrVM):
+            pLst = []
+            for i in range(self.nrComp):
+                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+                                        0 == self.p[i * self.nrVM + k]))
+                self.solver.add(Implies(self.a[i * self.nrVM + k],
+                                        self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
+                pLst.append(self.p[i * self.nrVM + k])
+
+            tmp.append(sum(pLst) <= self.ProcProv[k])
+            #self.solver.maximize(sum(pLst))
+        self.solver.add(tmp)
+        #
+        # # non-ITE version - MemProv
+        # self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        # tmp = []
+        # for k in range(self.nrVM):
+        #     mLst = []
+        #     for i in range(self.nrComp):
+        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+        #                                 0 == self.m[i * self.nrVM + k]))
+        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
+        #                                 self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
+        #         mLst.append(self.m[i * self.nrVM + k])
+        #     print("!!! ", mLst)
+        #     tmp.append(sum(mLst) <= self.MemProv[k])
+        #     #self.solver.maximize(sum(mLst))
+        # self.solver.add(tmp)
+        #
+        # # non-ITE version - StorageProv
+        # self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        # tmp = []
+        # for k in range(self.nrVM):
+        #     sLst = []
+        #     for i in range(self.nrComp):
+        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+        #                                 0 == self.s[i * self.nrVM + k]))
+        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
+        #                                 self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
+        #         sLst.append(self.s[i * self.nrVM + k])
+        #     #print("!!! ", sLst)
+        #     tmp.append(sum(sLst) <= self.StorageProv[k])
+        #     #self.solver.maximize(sum(sLst))
+        # self.solver.add(tmp)
 
     def run(self, smt2lib, smt2libsol):
         """

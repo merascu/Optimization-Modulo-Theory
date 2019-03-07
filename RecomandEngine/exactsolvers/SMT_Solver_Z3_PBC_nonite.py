@@ -50,6 +50,11 @@ class Z3_Solver(ManeuverProblem):
         self.StorageProv = [Real('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
         self.PriceProv = [Real('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
 
+        # auxiliary values for hardware constraints
+        self.p = [Real('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+
         #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
         # elements of VM should be positive
         #for i in range(len(self.vm)):
@@ -417,47 +422,82 @@ class Z3_Solver(ManeuverProblem):
         self.problem.logger.debug("constraintsHardware: componentsRequirements={}".format(componentsRequirements))
         componentsRequirements = [[0 if i is None else i for i in line] for line in componentsRequirements]
 
-        self.p = [Int('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        tmp = []
+        if self.solverTypeOptimize:
+            opt = sum(self.PriceProv)
+            self.min = self.solver.minimize(opt)
+
+        tmpP = []
+        tmpM = []
+        tmpS = []
         for k in range(self.nrVM):
             pLst = []
-            for i in range(self.nrComp):
-                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-                                        0 == self.p[i * self.nrVM + k]))
-                self.solver.add(Implies(self.a[i * self.nrVM + k],
-                                        self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
-                pLst.append(self.p[i * self.nrVM + k])
-            tmp.append(sum(pLst) <= self.ProcProv[k])
-            self.solver.minimize(sum(pLst))
-        self.solver.add(tmp)
-
-        self.m = [Int('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        tmp = []
-        for k in range(self.nrVM):
             mLst = []
-            for i in range(self.nrComp):
-                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-                                        0 == self.m[i * self.nrVM + k]))
-                self.solver.add(Implies(self.a[i * self.nrVM + k],
-                                        self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
-                mLst.append(self.m[i * self.nrVM + k])
-            tmp.append(sum(mLst) <= self.MemProv[k])
-            self.solver.minimize(sum(mLst))
-        self.solver.add(tmp)
-
-        self.s = [Int('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        tmp = []
-        for k in range(self.nrVM):
             sLst = []
             for i in range(self.nrComp):
                 self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-                                        0 == self.s[i * self.nrVM + k]))
+                                        And(0 == self.p[i * self.nrVM + k],
+                                            0 == self.m[i * self.nrVM + k],
+                                            0 == self.s[i * self.nrVM + k])))
                 self.solver.add(Implies(self.a[i * self.nrVM + k],
-                                        self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
-                sLst.append(self.s[i * self.nrVM + k])
-            tmp.append(sum(sLst) <= self.StorageProv[k])
+                                        And(self.p[i * self.nrVM + k] == componentsRequirements[i][0],
+                                            self.m[i * self.nrVM + k] == componentsRequirements[i][1],
+                                            self.s[i * self.nrVM + k] == componentsRequirements[i][2])))
+                pLst.append(self.p[i*self.nrVM + k])
+                mLst.append(self.m[i*self.nrVM + k])
+                sLst.append(self.s[i*self.nrVM + k])
+            tmpP.append(sum(pLst) <= self.ProcProv[k])
+            tmpM.append(sum(mLst) <= self.MemProv[k])
+            tmpS.append(sum(sLst) <= self.StorageProv[k])
+            self.solver.minimize(sum(pLst))
+            self.solver.minimize(sum(mLst))
             self.solver.minimize(sum(sLst))
-        self.solver.add(tmp)
+        self.solver.add(tmpP)
+        self.solver.add(tmpM)
+        self.solver.add(tmpS)
+
+        # self.p = [Real('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        # tmp = []
+        # for k in range(self.nrVM):
+        #     pLst = []
+        #     for i in range(self.nrComp):
+        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+        #                                 0 == self.p[i * self.nrVM + k]))
+        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
+        #                                 self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
+        #         pLst.append(self.p[i * self.nrVM + k])
+        #     tmp.append(sum(pLst) <= self.ProcProv[k])
+        #     self.solver.minimize(sum(pLst))
+        # self.solver.add(tmp)
+        #
+        # self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        # tmp = []
+        # for k in range(self.nrVM):
+        #     mLst = []
+        #     for i in range(self.nrComp):
+        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+        #                                 0 == self.m[i * self.nrVM + k]))
+        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
+        #                                 self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
+        #         mLst.append(self.m[i * self.nrVM + k])
+        #     tmp.append(sum(mLst) <= self.MemProv[k])
+        #     self.solver.minimize(sum(mLst))
+        # self.solver.add(tmp)
+        #
+        # self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
+        # tmp = []
+        # for k in range(self.nrVM):
+        #     sLst = []
+        #     for i in range(self.nrComp):
+        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
+        #                                 0 == self.s[i * self.nrVM + k]))
+        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
+        #                                 self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
+        #         sLst.append(self.s[i * self.nrVM + k])
+        #     tmp.append(sum(sLst) <= self.StorageProv[k])
+        #     self.solver.minimize(sum(sLst))
+        # self.solver.add(tmp)
+
+
 
     def run(self, smt2lib, smt2libsol):
         """
@@ -467,9 +507,9 @@ class Z3_Solver(ManeuverProblem):
         :return:
         """
 
-        if self.solverTypeOptimize:
-            opt = sum(self.PriceProv)
-            min = self.solver.minimize(opt)
+        # if self.solverTypeOptimize:
+        #    opt = sum(self.PriceProv)
+        #     min = self.solver.minimize(opt)
 
         self.createSMT2LIBFile(smt2lib)
 
@@ -495,13 +535,14 @@ class Z3_Solver(ManeuverProblem):
                     l.append(model[self.a[i * self.nrVM + k]])
                 print(l)
             ll = []
+
             for k in range(self.nrVM):
-                ll.append(model[self.PriceProv[k]]/1000.)
+                ll.append(model[self.PriceProv[k]])
             print("Price for each machine")
             print(ll)
 
         self.createSMT2LIBFileSolution(smt2libsol, status, model)
-        return min.value()/1000., ll, stoptime - startime
+        return self.min.value()/1000., ll, stoptime - startime
 
     def createSMT2LIBFile(self, fileName):
         """
