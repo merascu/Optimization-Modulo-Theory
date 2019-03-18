@@ -45,7 +45,7 @@ def runZ3Once(problem_file_name, configurations_file_name, solver):
     with open(outcsv, 'w', newline='') as csvfile:
         fwriter = csv.writer(csvfile, delimiter=',', )
         fwriter.writerow(['Price min value', 'Price for each machine', 'Time'])
-        for it in range(1):
+        for it in range(2):
             mp = ManeuverProblem()
             try:
                 mp.readConfiguration(problem_file_name)
@@ -63,14 +63,11 @@ def runZ3Once(problem_file_name, configurations_file_name, solver):
 
 if __name__ == "__main__":
 
-    runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
-              "SMT_Solver_Z3_PBC")
-    runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
-              "SMT_Solver_Z3_RealReal")
-    # ######################
+    ######################
     # SecureWebContainer #
     ######################
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json", "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
     #           "SMT_Solver_Z3_IntIntOr")
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
@@ -85,20 +82,20 @@ if __name__ == "__main__":
     #           "SMT_Solver_Z3_IntIntOr")
     #
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_40.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_60.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_80.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_100.json",
-    #           "SMT_Solver_Z3_IntIntLessThan")
-    #
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_40.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_60.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_80.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+    #     runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_100.json",
+    #               "SMT_Solver_Z3_IntIntLessThan")
+
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
     #           "SMT_Solver_Z3_RealBool")
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
@@ -144,34 +141,952 @@ if __name__ == "__main__":
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_100.json",
     #           "SMT_Solver_Z3_BV")
     #
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
     # ######################
     # # SecureBillingEmail #
     # ######################
     #
-    # ######################
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealReal")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_BV")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/SecureBillingEmail.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # # ######################
     # ######## Oryx2 #######
     # ######################
     #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealReal")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_BV")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Oryx2.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
     # ######################
     # ###### Wordpress3 ####
     # ######################
     #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealReal")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_BV")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
     # ######################
     # ###### Wordpress4 ####
     # ######################
     #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_BV")
+    #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealReal")
+
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntOr")
     # ######################
     # ###### Wordpress5 ####
     # ######################
     #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_BV")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_BV")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #         "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntOr")
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealReal")
     # ######################
     # ###### Wordpress6 ####
     # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal")
+    #
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # #
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    #
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
     #
     # ######################
     # ###### Wordpress7 ####
     # ######################
     #
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_80.json",
+    # #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    #
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
     # ######################
     # ###### Wordpress8 ####
+    #
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    #
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_nonite")
+    #
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
+    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_IntIntLessThan")
     # ######################
+    # ######################
+    # ###### Wordpress9 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    #
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress9.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # ######################
+    # ###### Wordpress10 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # ######################
+    # ###### Wordpress11 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_60.json",
+              "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # runZ3Once("../testInstances/Wordpress11.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_PBC_ite")
+    # ######################
+    # ###### Wordpress12 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress12.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    # ###### Wordpress13 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress13.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    #    # ###### Wordpress14 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    #    # ###### Wordpress15 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #
+    #    # ###### Wordpress16 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress16.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")
+    #    # ###### Wordpress17 ####
+    # ######################
+    #
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_60.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_80.json",
+    #           "SMT_Solver_Z3_RealBool")
+    # runZ3Once("../testInstances/Wordpress17.json", "../testInstances/offersICCP2018/offers_100.json",
+    #           "SMT_Solver_Z3_RealBool")

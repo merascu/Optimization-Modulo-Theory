@@ -462,6 +462,7 @@ class Z3_Solver(ManeuverProblem):
         #fo.close()
 
         with open(fileName, 'w+') as fo:
+            fo.truncate(0)
             fo.write(self.solver.sexpr())
         fo.close()
 
@@ -474,6 +475,7 @@ class Z3_Solver(ManeuverProblem):
         :return:
         """
         with open(fileName, 'w+') as foo:
+            foo.truncate(0)
             foo.write(repr(status)+ '[\n')
             for k in model:
                 foo.write('%s = %s, ' % (k, model[k]))
