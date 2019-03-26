@@ -20,24 +20,25 @@ def read_available_configurations(fileConfigurations):
     print(availableConfigurations)
     return availableConfigurations
 
-def runZ3Once(problem_file_name, configurations_file_name, solver):
+def runZ3Once(problem_file_name, configurations_file_name, solver, option):
+    # option: linear or nonlinear
     filename1 = problem_file_name.split("/").pop().split(".")[0]
     filename2 = configurations_file_name.split("/").pop().split(".")[0]
 
-    resultsDirectoryPath = "../experimentalResults/linear/output_"+solver+"/csv/"
+    resultsDirectoryPath = "../experimentalResults/"+option+"/output_"+solver+"/csv/"
     if not os.path.exists(resultsDirectoryPath):
         os.makedirs(resultsDirectoryPath)
 
     outcsv = resultsDirectoryPath + filename1 + "-" + filename2 + ".csv"
 
     # File for saving the problem into SMT2LIB format
-    resultsDirectoryPath = "../experimentalResults/linear/output_"+solver+"/SMT2/"
+    resultsDirectoryPath = "../experimentalResults/"+option+"/output_"+solver+"/SMT2/"
     if not os.path.exists(resultsDirectoryPath):
         os.makedirs(resultsDirectoryPath)
     smt2lib = resultsDirectoryPath + filename1 + "-" + filename2 + ".smt2"
 
     # File for saving the solution of the problem into SMT2LIB format
-    resultsDirectoryPath = "../experimentalResults/linear/output_"+solver+"/SMT2-Sol/"
+    resultsDirectoryPath = "../experimentalResults/"+option+"/output_"+solver+"/SMT2-Sol/"
     if not os.path.exists(resultsDirectoryPath):
         os.makedirs(resultsDirectoryPath)
     smt2libsol = resultsDirectoryPath + filename1 + "-" + filename2 + "-sol.smt2"
@@ -66,8 +67,8 @@ if __name__ == "__main__":
     ######################
     # SecureWebContainer #
     ######################
-    # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
-    #           "SMT_Solver_Z3_IntIntOr")
+    runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+              "SMT_Solver_Z3_IntIntOr","linear")
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_10.json",
     #           "SMT_Solver_Z3_IntIntOr")
     # runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_20.json",
