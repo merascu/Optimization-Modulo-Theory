@@ -45,7 +45,7 @@ def runZ3Once(problem_file_name, configurations_file_name, solver):
     with open(outcsv, 'a', newline='') as csvfile:
         fwriter = csv.writer(csvfile, delimiter=',', )
         #fwriter.writerow(['Price min value', 'Price for each machine', 'Time'])
-        for it in range(1):
+        for it in range(3):
             mp = ManeuverProblem()
             try:
                 mp.readConfiguration(problem_file_name)
@@ -727,10 +727,10 @@ if __name__ == "__main__":
     #           "SMT_Solver_Z3_RealBool")
     # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_40.json",
     #           "SMT_Solver_Z3_RealBool")
-    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
-    #           "SMT_Solver_Z3_RealBool")
-    # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
-    #           "SMT_Solver_Z3_RealBool")
+    runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_60.json",
+              "SMT_Solver_Z3_RealBool")
+    runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_80.json",
+              "SMT_Solver_Z3_RealBool")
     # runZ3Once("../testInstances/Wordpress6.json", "../testInstances/offersICCP2018/offers_100.json",
     #           "SMT_Solver_Z3_RealBool")
     # #
