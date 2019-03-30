@@ -7,7 +7,7 @@ save_path_QF_LRA = "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/out
 save_path_QF_LIA = "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output/linear/QF_LIA"
 save_path_QF_BV = "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output/linear/QF_BV"
 
-for root, dirs, files in os.walk("/Users/razvanmetes/Optimization-Modulo-Theory", topdown=False):
+for root, dirs, files in os.walk("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults/linear", topdown=False):
    for name in files:
        if "output_SMT_Solver_Z3_" in os.path.join(root, name):
            if "SMT2" in os.path.join(root, name):
