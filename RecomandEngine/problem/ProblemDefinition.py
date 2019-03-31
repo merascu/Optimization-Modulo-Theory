@@ -30,7 +30,7 @@ class ManeuverProblem:
         self.D = numpy.zeros((self.nrComp, self.nrComp), dtype=numpy.int) #corelation hraph
 
 
-    def solveSMT(self, availableConfigs, smt2lib, smt2libsol, solver_type, solver):
+    def solveSMT(self, availableConfigs, smt2lib, smt2libsol, solver_type, solver, option):
         """
         Solves the optimization problem using the imported SMT solver and available VMs configurations
         :param self: the optimization problem
@@ -39,35 +39,15 @@ class ManeuverProblem:
         :return:
         """
 
-        if solver == "SMT_Solver_Z3_BV":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_BV
-            SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
-        elif solver == "SMT_Solver_Z3_IntIntLessThan":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntLessThan
-            SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-        elif solver == "SMT_Solver_Z3_IntIntOr":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntOr
-            SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
-        elif solver == "SMT_Solver_Z3_RealBool":
+        if solver == "SMT_Solver_Z3_RealBool" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealBool
             SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-        elif solver == "SMT_Solver_Z3_RealReal":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealReal
-            SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
-        elif solver == "SMT_Solver_Z3_PBC_ite":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_PBC_ite
-            SMTSolver = SMT_Solver_Z3_PBC_ite.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-        elif solver == "SMT_Solver_Z3_PBC_nonite":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_PBC_nonite
-            SMTSolver = SMT_Solver_Z3_PBC_nonite.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        if solver == "SMT_Solver_Z3_RealBool" and option == "nonlinear":
+            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealBool
+            SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
-        elif solver == "SMT_Solver_Z3_RealSymBreak":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealSymBreak
-            SMTSolver = SMT_Solver_Z3_RealSymBreak.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
+        # TODO add for the other solvers
 
         if SMTSolver.availableConfigurations is not None:
             self.restrictionsList.append(
