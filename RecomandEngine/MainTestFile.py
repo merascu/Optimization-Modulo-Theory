@@ -64,8 +64,11 @@ def runZ3Once(problem_file_name, configurations_file_name, solver, option):
 
 if __name__ == "__main__":
 
-    ######################
-    # SecureWebContainer #
-    ######################
-    runZ3Once("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
-              "SMT_Solver_Z3_RealBool","nonlinear")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_4.json",
+    #            "SMT_Solver_Z3_RealBool", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealBool", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_20.json",
+    #            "SMT_Solver_Z3_RealBool", "nonlinear")
+    runZ3Once("../testInstances/Wordpress10.json", "../testInstances/offersICCP2018/offers_40.json",
+              "SMT_Solver_Z3_RealBool", "nonlinear")
