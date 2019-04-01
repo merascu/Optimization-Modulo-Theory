@@ -441,53 +441,6 @@ class Z3_Solver(ManeuverProblem):
         self.solver.add(tmp)
         self.problem.logger.debug("tmp:{}".format(tmp))
 
-        # non-ITE version - ProcProv
-        self.p = [Real('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        tmp = []
-        for k in range(self.nrVM):
-            pLst = []
-            for i in range(self.nrComp):
-                self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-                                        0 == self.p[i * self.nrVM + k]))
-                self.solver.add(Implies(self.a[i * self.nrVM + k],
-                                        self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
-                pLst.append(self.p[i * self.nrVM + k])
-
-            tmp.append(sum(pLst) <= self.ProcProv[k])
-            #self.solver.maximize(sum(pLst))
-        self.solver.add(tmp)
-        #
-        # # non-ITE version - MemProv
-        # self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        # tmp = []
-        # for k in range(self.nrVM):
-        #     mLst = []
-        #     for i in range(self.nrComp):
-        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-        #                                 0 == self.m[i * self.nrVM + k]))
-        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
-        #                                 self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
-        #         mLst.append(self.m[i * self.nrVM + k])
-        #     print("!!! ", mLst)
-        #     tmp.append(sum(mLst) <= self.MemProv[k])
-        #     #self.solver.maximize(sum(mLst))
-        # self.solver.add(tmp)
-        #
-        # # non-ITE version - StorageProv
-        # self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        # tmp = []
-        # for k in range(self.nrVM):
-        #     sLst = []
-        #     for i in range(self.nrComp):
-        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-        #                                 0 == self.s[i * self.nrVM + k]))
-        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
-        #                                 self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
-        #         sLst.append(self.s[i * self.nrVM + k])
-        #     #print("!!! ", sLst)
-        #     tmp.append(sum(sLst) <= self.StorageProv[k])
-        #     #self.solver.maximize(sum(sLst))
-        # self.solver.add(tmp)
 
     def run(self, smt2lib, smt2libsol):
         """
@@ -540,13 +493,13 @@ class Z3_Solver(ManeuverProblem):
         :param fileName: string representing the file name storing the SMT2LIB formulation of the problem
         :return:
         """
-        # with open(fileName, 'w+') as fo:
-        #    fo.write("(set-option :sat.pb.solver true)\n")
-        #    fo.write("(set-option :sat.cardinality.solver true)\n")
-        # fo.close()
+        with open(fileName, 'w+') as fo:
+            fo.truncate(0)
+            fo.write("(set-option :sat.pb.solver true)\n")
+            fo.write("(set-option :sat.cardinality.solver true)\n")
+        fo.close()
 
         with open(fileName, 'a+') as fo:
-            fo.truncate(0)
             fo.write(self.solver.sexpr())
         fo.close()
 
