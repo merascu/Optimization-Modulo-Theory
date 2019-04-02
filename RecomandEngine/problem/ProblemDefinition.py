@@ -47,13 +47,13 @@ class ManeuverProblem:
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealBool
             SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
-        if solver == "SMT_Solver_Z3_PBC_ite" and option == "linear":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_PBC_ite
-            SMTSolver = SMT_Solver_Z3_PBC_ite.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        if solver == "SMT_Solver_Z3_RealReal" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealReal
+            SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
-        if solver == "SMT_Solver_Z3_PBC_ite" and option == "nonlinear":
-            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_PBC_ite
-            SMTSolver = SMT_Solver_Z3_PBC_ite.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        if solver == "SMT_Solver_Z3_RealReal" and option == "nonlinear":
+            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealReal
+            SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
         # TODO add for the other solvers
 
