@@ -495,8 +495,8 @@ class Z3_Solver(ManeuverProblem):
         """
         with open(fileName, 'w+') as fo:
             fo.truncate(0)
-            fo.write("(set-option :sat.pb.solver true)\n")
-            fo.write("(set-option :sat.cardinality.solver true)\n")
+            # fo.write("(set-option :sat.pb.solver true)\n")
+            # fo.write("(set-option :sat.cardinality.solver true)\n")
         fo.close()
 
         with open(fileName, 'a+') as fo:

@@ -46,7 +46,7 @@ def runZ3Once(problem_file_name, configurations_file_name, solver, option):
     with open(outcsv, 'a', newline='') as csvfile:
         fwriter = csv.writer(csvfile, delimiter=',', )
         #fwriter.writerow(['Price min value', 'Price for each machine', 'Time'])
-        for it in range(1):
+        for it in range(4):
             mp = ManeuverProblem()
             try:
                 mp.readConfiguration(problem_file_name)
@@ -64,19 +64,22 @@ def runZ3Once(problem_file_name, configurations_file_name, solver, option):
 
 if __name__ == "__main__":
 
-    runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_4.json",
-              "SMT_Solver_Z3_RealReal", "nonlinear")
-    runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_10.json",
-              "SMT_Solver_Z3_RealReal", "nonlinear")
-    runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_20.json",
-              "SMT_Solver_Z3_RealReal", "nonlinear")
-    runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_40.json",
-              "SMT_Solver_Z3_RealReal", "nonlinear")
-    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_60.json",
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_60.json",
     #           "SMT_Solver_Z3_RealReal", "nonlinear")
-    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_80.json",
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_80.json",
     #           "SMT_Solver_Z3_RealReal", "nonlinear")
-    # runZ3Once("../testInstances/Wordpress7.json", "../testInstances/offersICCP2018/offers_100.json",
+    # runZ3Once("../testInstances/Wordpress4.json", "../testInstances/offersICCP2018/offers_100.json",
     #           "SMT_Solver_Z3_RealReal", "nonlinear")
+    #
+    #
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_4.json",
+    #           "SMT_Solver_Z3_RealReal", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_10.json",
+    #           "SMT_Solver_Z3_RealReal", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_RealReal", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress5.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_RealReal", "nonlinear")
+
 
 
