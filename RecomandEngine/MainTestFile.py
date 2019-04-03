@@ -85,12 +85,12 @@ if __name__ == "__main__":
               "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
     runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_20.json",
               "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
-    runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_40.json",
-              "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress14.json", "../testInstances/offersICCP2018/offers_40.json",
+    #           "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
 
     runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_4.json",
               "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
     runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_10.json",
               "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
-    runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_20.json",
-              "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
+    # runZ3Once("../testInstances/Wordpress15.json", "../testInstances/offersICCP2018/offers_20.json",
+    #           "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
