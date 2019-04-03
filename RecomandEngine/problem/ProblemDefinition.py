@@ -55,7 +55,13 @@ class ManeuverProblem:
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealReal
             SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
-        # TODO add for the other solvers
+        if solver == "SMT_Solver_Z3_IntIntLessThan" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntLessThan
+            SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_IntIntLessThan" and option == "nonlinear":
+            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_IntIntLessThan
+            SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
         if SMTSolver.availableConfigurations is not None:
             self.restrictionsList.append(
