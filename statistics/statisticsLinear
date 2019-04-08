@@ -1,0 +1,103 @@
+##########StatisticsBest##########
+
+Oryx2                         offers10            RealReal            7.902011585235596   
+Oryx2                         offers100           RealReal            25.32125267982483   
+Oryx2                         offers20            IntIntLessThan      8.02258505821228    
+Oryx2                         offers4             IntIntOr            3.7285484790802004  
+Oryx2                         offers40            IntIntLessThan      7.057214975357056   
+Oryx2                         offers60            IntIntOr            13.604612874984742  
+Oryx2                         offers80            RealReal            20.84867067337036   
+SecureBillingEmail            offers10            PBC_ite             0.12091364860534667 
+SecureBillingEmail            offers100           PBC_ite             0.603114652633667   
+SecureBillingEmail            offers20            PBC_ite             0.16184701919555664 
+SecureBillingEmail            offers4             PBC_ite             0.07297654151916504 
+SecureBillingEmail            offers40            PBC_ite             0.2539515972137451  
+SecureBillingEmail            offers60            PBC_ite             0.3996864318847656  
+SecureBillingEmail            offers80            PBC_ite             0.5365164756774903  
+SecureWebContainer            offers10            PBC_ite             0.1153803825378418  
+SecureWebContainer            offers100           PBC_ite             1.2887473106384277  
+SecureWebContainer            offers20            PBC_ite             0.23767271041870117 
+SecureWebContainer            offers4             RealBool            0.08864216804504395 
+SecureWebContainer            offers40            PBC_ite             0.42920694351196287 
+SecureWebContainer            offers60            PBC_ite             0.7367358684539795  
+SecureWebContainer            offers80            PBC_ite             1.0400352001190185  
+Wordpress10                   offers10            PBC_ite             74.07283334732055   
+Wordpress10                   offers20            PBC_ite             379.5499452590942   
+Wordpress10                   offers4             IntIntLessThan      58.54944086074829   
+Wordpress10                   offers40            PBC_ite             783.4382591724395   
+Wordpress11                   offers10            IntIntLessThan      92.13212451934814   
+Wordpress11                   offers20            PBC_ite             137.96349401473998  
+Wordpress11                   offers4             IntIntOr            38.10535063743591   
+Wordpress11                   offers40            PBC_ite             1916.4920189857482  
+Wordpress12                   offers10            PBC_ite             147.2453426837921   
+Wordpress12                   offers20            PBC_ite             312.03403677940366  
+Wordpress12                   offers4             PBC_ite             169.21577920913697  
+Wordpress13                   offers10            PBC_ite             291.3758192062378   
+Wordpress13                   offers20            IntIntOr            605.4045571804047   
+Wordpress13                   offers4             IntIntLessThan      129.09196190834047  
+Wordpress14                   offers10            PBC_ite             595.6392124176025   
+Wordpress14                   offers20            PBC_ite             399.04053301811217  
+Wordpress14                   offers4             IntIntOr            240.04588022232056  
+Wordpress15                   offers10            PBC_ite             1176.6294445037843  
+Wordpress15                   offers20            PBC_ite             1258.3930070877075  
+Wordpress15                   offers4             IntIntOr            735.0840770721436   
+Wordpress16                   offers20            PBC_ite             1111.1027044296266  
+Wordpress16                   offers4             IntIntOr            889.1782691001893   
+Wordpress17                   offers20            PBC_ite             1573.835381937027   
+Wordpress17                   offers4             PBC_ite             2689.2550241470335  
+Wordpress3                    offers10            IntIntOr            1.1253867149353027  
+Wordpress3                    offers100           RealBool            25.289679193496703  
+Wordpress3                    offers20            PBC_ite             1.7413676738739015  
+Wordpress3                    offers4             PBC_nonite          2.5114247798919678  
+Wordpress3                    offers40            PBC_ite             3.878848123550415   
+Wordpress3                    offers60            PBC_ite             12.660234451293945  
+Wordpress3                    offers80            BV                  13.597306966781616  
+Wordpress4                    offers10            RealBool            3.502409744262695   
+Wordpress4                    offers100           BV                  93.64897546768188   
+Wordpress4                    offers20            PBC_ite             10.036572790145874  
+Wordpress4                    offers4             PBC_nonite          8.773496770858765   
+Wordpress4                    offers40            PBC_ite             58.538477945327756  
+Wordpress4                    offers60            BV                  104.42171940803527  
+Wordpress4                    offers80            BV                  41.646801471710205  
+Wordpress5                    offers10            IntIntLessThan      2.2952035903930663  
+Wordpress5                    offers100           BV                  111.92716898918152  
+Wordpress5                    offers20            RealBool            48.48837547302246   
+Wordpress5                    offers4             IntIntLessThan      4.13650221824646    
+Wordpress5                    offers40            BV                  102.72118816375732  
+Wordpress5                    offers60            RealBool            100.18127398490905  
+Wordpress5                    offers80            PBC_ite             295.0317205429077   
+Wordpress6                    offers10            PBC_ite             3.885850954055786   
+Wordpress6                    offers100           PBC_ite             290.01776299476626  
+Wordpress6                    offers20            BV                  154.1395070552826   
+Wordpress6                    offers4             BV                  25.16642336845398   
+Wordpress6                    offers40            RealBool            143.98029537200927  
+Wordpress6                    offers60            RealBool            297.7161299705505   
+Wordpress6                    offers80            PBC_ite             230.85603923797606  
+Wordpress7                    offers10            PBC_ite             5.783689498901367   
+Wordpress7                    offers100           RealBool            364.30318636894225  
+Wordpress7                    offers20            PBC_ite             91.9188380241394    
+Wordpress7                    offers4             PBC_ite             11.990344524383545  
+Wordpress7                    offers40            PBC_ite             153.83663682937623  
+Wordpress7                    offers60            PBC_ite             168.204745388031    
+Wordpress7                    offers80            PBC_ite             202.1423333644867   
+Wordpress8                    offers10            RealBool            25.835016441345214  
+Wordpress8                    offers100           PBC_ite             1396.4708606243134  
+Wordpress8                    offers20            PBC_ite             127.45104026794434  
+Wordpress8                    offers4             PBC_ite             15.462753677368164  
+Wordpress8                    offers40            PBC_ite             227.2756953239441   
+Wordpress8                    offers60            PBC_ite             638.6860346317292   
+Wordpress8                    offers80            PBC_ite             928.1957761764527   
+Wordpress9                    offers10            IntIntLessThan      26.647790813446044  
+Wordpress9                    offers20            PBC_ite             142.33473443984985  
+Wordpress9                    offers4             IntIntOr            29.944053220748902  
+Wordpress9                    offers40            PBC_ite             764.6857967853546   
+
+##########CountEncodings##########
+
+PBC_ite                       52                  
+IntIntLessThan                8                   
+BV                            8                   
+RealBool                      9                   
+IntIntOr                      9                   
+RealReal                      3                   
+PBC_nonite                    2                   
