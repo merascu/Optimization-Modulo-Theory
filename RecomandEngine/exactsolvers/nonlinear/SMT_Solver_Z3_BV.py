@@ -3,9 +3,11 @@ from RecomandEngine.problem.ProblemDefinition import ManeuverProblem
 import time
 
 class Z3_Solver(ManeuverProblem):
+    # Creating bit-vector constants
+    bv0 = BitVecVal(0, 32)
+    bv1 = BitVecVal(1, 32)
 
     def __init__(self, nrVm, nrComp, availableConfigurations, problem, solverType):
-
         self.__constMap = {}
         self.problem = problem
         if solverType == "optimize":
@@ -17,6 +19,8 @@ class Z3_Solver(ManeuverProblem):
         self.availableConfigurations = availableConfigurations
         self.__initSolver()
 
+    def __del__(self):
+        print("===Destructor called===")
 
     def __initSolver(self):
         """
@@ -32,11 +36,6 @@ class Z3_Solver(ManeuverProblem):
             self.labelIdx_oneToOne = 0
             self.labelIdx_offer = 0
             self.labelIdx_conflict = 0
-            self.labelIdx_reqprov = 0
-            self.labelIdx_fulldepl = 0
-            self.labelIdx_bound = 0
-
-
         self.__defineVariablesAndConstraints()
 
     def __defineVariablesAndConstraints(self):
@@ -52,23 +51,25 @@ class Z3_Solver(ManeuverProblem):
         self.VMType = {}
 
         # values from availableConfigurations
-        self.ProcProv = [Int('ProcProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.MemProv = [Int('MemProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.StorageProv = [Int('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
-        self.PriceProv = [Int('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
+        self.ProcProv = [BitVec('ProcProv%i' % j, 32) for j in range(1, self.nrVM + 1)]
+        self.MemProv = [BitVec('MemProv%i' % j, 32) for j in range(1, self.nrVM + 1)]
+        self.StorageProv = [BitVec('StorageProv%i' % j, 32) for j in range(1, self.nrVM + 1)]
+        self.PriceProv = [BitVec('PriceProv%i' % j, 32) for j in range(1, self.nrVM + 1)]
 
         #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
         # elements of VM should be positive
         #for i in range(len(self.vm)):
         #    self.solver.add(Or([self.vm[i] == 0, self.vm[i] == 1]))
 
-        self.a = [Int('C%i_VM%i' % (i + 1, j + 1)) for i in range(self.nrComp) for j in range(self.nrVM)]
+        self.a = [BitVec('C%i_VM%i' % (i + 1, j + 1), 32) for i in range(self.nrComp) for j in range(self.nrVM)]
+        print("a=", self.a)
 
         # elements of the association matrix should be just 0 or 1
         for i in range(len(self.a)):
-            self.solver.add(And([self.a[i] >= 0, self.a[i] <= 1]))
+            self.solver.add(Or([self.a[i] == Z3_Solver.bv0, self.a[i] == Z3_Solver.bv1]))
+        #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
 
-        self.vmType = [Int('VM%iType' % j) for j in range(1, self.nrVM + 1)]
+        self.vmType = [BitVec('VM%iType' % j, 32) for j in range(1, self.nrVM + 1)]
         # vmType is one of the types from availableConfigurations
         for i in range(len(self.vmType)):
             lst = [self.vmType[i] == t for t in range(1, len(self.availableConfigurations) + 1)]
@@ -77,13 +78,16 @@ class Z3_Solver(ManeuverProblem):
         #If a machine is not leased then its price is 0
         for j in range(self.nrVM):
            # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
-           self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0, self.PriceProv[j] == 0))
+           self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == Z3_Solver.bv0,
+                                   self.PriceProv[j] == Z3_Solver.bv0))
 
         # encode offers
         for t in range(len(self.availableConfigurations)):
             for j in range(self.nrVM):
                 if self.solverTypeOptimize:
-                    self.solver.add(Implies(And(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vmType[j] == t+1),
+                    self.solver.add(
+                        Implies(And(UGE(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]), Z3_Solver.bv1),
+                                    self.vmType[j] == t+1),
                             And(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1]),
                                 self.ProcProv[j] == self.availableConfigurations[t][1],
                                 self.MemProv[j] == (self.availableConfigurations[t][2]),
@@ -91,16 +95,10 @@ class Z3_Solver(ManeuverProblem):
                                 )
                             ))
                 else:
-                    self.__constMap["LabelOffer: " + str(self.labelIdx_offer)] = \
-                        Implies(And(sum([self.a[i + j] for i in range(0, len(self.a), self.nrVM)]) >= 1,
-                                    self.vmType[j] == t + 1),
-                                And(self.PriceProv[j] == self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1],
-                                    self.ProcProv[j] == self.availableConfigurations[t][1],
-                                    self.MemProv[j] == self.availableConfigurations[t][2],
-                                    self.StorageProv[j] == self.availableConfigurations[t][3]
-                                    ))
-
-                    self.solver.assert_and_track(Implies(And(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vmType[j] == t + 1),
+                    self.solver.assert_and_track(
+                        Implies(
+                            And(UGE(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]), Z3_Solver.bv1),
+                                self.vmType[j] == t + 1),
                                             And(self.PriceProv[j] == self.availableConfigurations[t][
                                                 len(self.availableConfigurations[0]) - 1],
                                                 self.ProcProv[j] == self.availableConfigurations[t][1],
@@ -136,14 +134,14 @@ class Z3_Solver(ManeuverProblem):
                 #self.problem.logger.debug("...{} <= 1".format([self.a[alphaCompId * self.nrVM + j], self.a[conflictCompId * self.nrVM + j]]))
                 if self.solverTypeOptimize:
                     self.solver.add(sum([Product([self.a[alphaCompId * self.nrVM + j],
-                                  self.a[conflictCompId * self.nrVM + j]])
-                         for conflictCompId in conflictCompsIdList]) == 0)
+                                                  self.a[conflictCompId * self.nrVM + j]])
+                                         for conflictCompId in conflictCompsIdList]) == Z3_Solver.bv0)
 
                 else:
-                    self.solver.assert_and_track(sum([Product([self.a[alphaCompId    * self.nrVM + j],
-                                              self.a[conflictCompId * self.nrVM + j]])
-                                     for conflictCompId in conflictCompsIdList])==0,
-                        "LabelConflict: " + str(self.labelIdx_conflict))
+                    self.solver.assert_and_track(
+                        ULE(sum([self.a[alphaCompId * self.nrVM + j], self.a[conflictCompId * self.nrVM + j]]),
+                            Z3_Solver.bv1, "LabelConflict: " + str(self.labelIdx_conflict))
+                    )
                     self.labelIdx_conflict += 1
 
     def RestrictionOneToOneDependency(self, alphaCompId, betaCompId):
@@ -157,11 +155,7 @@ class Z3_Solver(ManeuverProblem):
             if self.solverTypeOptimize:
                 self.solver.add(self.a[alphaCompId * self.nrVM + j] == self.a[betaCompId * self.nrVM + j])
             else:
-                self.__constMap["LabelOneToOne: " + str(self.labelIdx_conflict)] = \
-                    self.a[alphaCompId * self.nrVM + j] == self.a[betaCompId * self.nrVM + j]
-
-                self.solver.assert_and_track(self.a[alphaCompId * self.nrVM + j] == self.a[betaCompId * self.nrVM + j],
-                                "LabelOneToOne" + str(self.labelIdx_oneToOne))
+                self.solver.add(self.a[alphaCompId * self.nrVM + j] == self.a[betaCompId * self.nrVM + j], "LabelOneToOne" + str(self.labelIdx))
                 self.labelIdx_oneToOne += 1
 
     def RestrictionManyToManyDependency(self, alphaCompId, betaCompId, relation):
@@ -178,22 +172,22 @@ class Z3_Solver(ManeuverProblem):
         if relation == "<=":
             if self.solverTypeOptimize:
                 self.solver.add(
-                    sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) <=
-                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]))
+                    ULE(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]),
+                        sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])))
             else:
                 self.solver.assert_and_track(
-                    sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) <=
-                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), "LabelManyToMany1: " + str(self.labelIdx))
+                    ULE(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]),
+                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])), "LabelManyToMany1: " + str(self.labelIdx))
                 self.labelIdx += 1
         elif relation == ">=":
             if self.solverTypeOptimize:
                 self.solver.add(
-                    sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) >=
-                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]))
+                    UGE(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]),
+                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])))
             else:
                 self.solver.assert_and_track(
-                    sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) >=
-                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), "LabelManyToMany2: " + str(self.labelIdx))
+                    UGE(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]),
+                    sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])), "LabelManyToMany2: " + str(self.labelIdx))
                 self.labelIdx += 1
         elif relation == "=":
             if self.solverTypeOptimize:
@@ -216,22 +210,22 @@ class Z3_Solver(ManeuverProblem):
         """
         if self.solverTypeOptimize:
             self.solver.add(
-                noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
-                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) >= 0)
+                UGE(noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
+                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), Z3_Solver.bv0))
         else:
             self.solver.assert_and_track(
-                noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
-                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) >= 0, "LabelOneToMany: " + str(self.labelIdx))
+                UGE(noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
+                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), Z3_Solver.bv0), "LabelOneToMany: " + str(self.labelIdx))
             self.labelIdx += 1
 
         if self.solverTypeOptimize:
             self.solver.add(
-                noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
-                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) < noInstances)
+                ULT(noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
+                              sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), noInstances))
         else:
             self.solver.assert_and_track(
-                noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
-                              sum([self.a[betaCompId  * self.nrVM + j] for j in range(self.nrVM)]) < noInstances, "LabelOneToMany: " + str(self.labelIdx))
+                ULT(noInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) -
+                              sum([self.a[betaCompId  * self.nrVM + j] for j in range(self.nrVM)]), noInstances), "LabelOneToMany: " + str(self.labelIdx))
             self.labelIdx += 1
 
     def RestrictionUpperLowerEqualBound(self, compsIdList, bound, operator):
@@ -246,42 +240,47 @@ class Z3_Solver(ManeuverProblem):
         :return: None
         """
 
+        # Transform int into bit vectors
+        bvBound = BitVecVal(bound, 32)
+
         self.problem.logger.debug("RestrictionUpperLowerEqualBound: {} {} {} ".format(compsIdList, operator, bound))
 
         if operator == "<=":
             if self.solverTypeOptimize:
                 self.solver.add(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)])
-                    <= bound)
+                    ULE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                        bvBound)
+                )
             else:
-                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx_bound))] = \
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= bound
+                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = \
+                    ULE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]), bvBound)
                 self.solver.assert_and_track(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)])
-                    <= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx_bound))
-                self.labelIdx_bound += 1
+                    ULE(sum([If(self.a[compId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0)
+                         for compId in compsIdList for j in range(self.nrVM)]), bvBound), "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                self.labelIdx += 1
         elif operator == ">=":
             if self.solverTypeOptimize:
                 self.solver.add(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound)
+                    UGE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                        bvBound))
             else:
-                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx_bound))] = \
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound
+                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = \
+                    UGE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]), bvBound)
                 self.solver.assert_and_track(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound,
-                    "LabelUpperLowerEqualBound" + str(self.labelIdx_bound))
-                self.labelIdx_bound += 1
+                    UGE(sum([If(self.a[compId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0)
+                         for compId in compsIdList for j in range(self.nrVM)]), bvBound
+                        ), "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                self.labelIdx += 1
         elif operator == "=":
             if self.solverTypeOptimize:
                 self.solver.add(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bound)
+                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bvBound)
             else:
-                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx_bound))] \
-                    = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bound
+                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bvBound
+
                 self.solver.assert_and_track(
-                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bound,
-                    "LabelUpperLowerEqualBound" + str(self.labelIdx_bound))
-                self.labelIdx_bound += 1
+                    sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) == bvBound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                self.labelIdx += 1
         else:
             self.problem.logger.info("Unknown operator")
 
@@ -293,18 +292,27 @@ class Z3_Solver(ManeuverProblem):
         :param upperBound: a positive number
         :return:
         """
+
+        # Transform int into bit vectors
+        bvLowerBound = BitVecVal(lowerBound, 32)
+        bvUpperBound = BitVecVal(upperBound, 32)
+
         for i in range(len(compsIdList)): compsIdList[i] -= 1
         if self.solverTypeOptimize:
-            self.solver.add(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= lowerBound)
+            self.solver.add(UGE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                                bvLowerBound))
         else:
             self.solver.assert_and_track(
-                sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= lowerBound, "LabelRangeBound: " + str(self.labelIdx))
+                UGE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                    bvLowerBound), "LabelRangeBound: " + str(self.labelIdx))
             self.labelIdx += 1
         if self.solverTypeOptimize:
-            self.solver.add(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= upperBound)
+            self.solver.add(ULE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                                bvUpperBound))
         else:
             self.solver.assert_and_track(
-                sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= upperBound, "LabelRangeBound: " + str(self.labelIdx))
+                ULE(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                    bvUpperBound, "LabelRangeBound: " + str(self.labelIdx)))
             self.labelIdx += 1
 
     def RestrictionFullDeployment(self, alphaCompId, notInConflictCompsIdList):
@@ -315,22 +323,24 @@ class Z3_Solver(ManeuverProblem):
         :param notInConflictCompsIdList: the list of components that alphaCompId is not in conflict in
         :return: None
         """
+
         for j in range(self.nrVM):
             if self.solverTypeOptimize:
+
                 self.solver.add(
                     (sum([self.a[alphaCompId * self.nrVM + j]]+[self.a[_compId * self.nrVM + j] for _compId in notInConflictCompsIdList]))
                     ==
-                    (If(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, 1, 0))
-                )
+                    (If(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= Z3_Solver.bv1, Z3_Solver.bv1, Z3_Solver.bv0)))
             else:
                 self.solver.assert_and_track(
-                    (sum([self.a[alphaCompId * self.nrVM + j]] + [self.a[_compId * self.nrVM + j] for _compId in
-                                                                  notInConflictCompsIdList]))
-                    ==
-                    (If(sum([self.a[i + j] for i in range(0, len(self.a), self.nrVM)]) >= 1, 1, 0)),
-                "LabelFullDeployment: " + str(self.labelIdx_fulldepl)
+                    (sum([If(self.a[alphaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0)] +
+                         [If(self.a[_compId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for _compId in notInConflictCompsIdList])) ==
+                    (UGE(sum([If(self.a[i + j],
+                             Z3_Solver.bv1,
+                             Z3_Solver.bv0) for i in range(0, len(self.a), self.nrVM)]), 1)),
+                    "LabelFullDeployment: " + str(self.labelIdx)
                 )
-                self.labelIdx_fulldepl += 1
+                self.labelIdx += 1
 
     def RestrictionRequireProvideDependency(self, alphaCompId, betaCompId, alphaCompIdInstances, betaCompIdInstances):
         """
@@ -346,18 +356,19 @@ class Z3_Solver(ManeuverProblem):
 
         if self.solverTypeOptimize:
             self.solver.add(
-                alphaCompIdInstances*sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) <=
-                betaCompIdInstances *sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]))
+                ULE(
+                    alphaCompIdInstances*sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]),
+                    betaCompIdInstances*sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])))
         else:
-            self.__constMap["LabelRequireProvide: " + str(self.labelIdx_reqprov)] = \
-                alphaCompIdInstances * sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) <=\
-                betaCompIdInstances * sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)])
-
+            self.__constMap["LabelRequireProvide: " + str(self.labelIdx)] = \
+                ULE(alphaCompIdInstances * sum([If(self.a[alphaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)]) \
+                ,
+                betaCompIdInstances * sum([If(self.a[betaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)])
+                    )
             self.solver.assert_and_track(
-                alphaCompIdInstances*sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) <=
-                betaCompIdInstances *sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]),
-                "LabelRequireProvide: " + str(self.labelIdx_reqprov))
-            self.labelIdx_reqprov += 1
+                ULE(alphaCompIdInstances * sum([If(self.a[alphaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)]),
+                betaCompIdInstances  * sum([If(self.a[betaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)])), "LabelRequireProvide: " + str(self.labelIdx))
+            self.labelIdx += 1
 
     def RestrictionAlphaOrBeta(self, alphaCompId, betaCompId):
         """
@@ -368,30 +379,34 @@ class Z3_Solver(ManeuverProblem):
         """
         self.problem.logger.debug("RestrictionAlphaOrBeta: alphaCompId={}, betaCompId={}".format(alphaCompId, betaCompId))
         if self.solverTypeOptimize:
-            self.solver.add(Or(sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) == 0,
-                               sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) >= 1)
+            self.solver.add(Or(sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) == Z3_Solver.bv0,
+                               UGE(sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]), Z3_Solver.bv1))
                             )
         else:
             self.solver.assert_and_track(
-                Or(sum([If(self.a[betaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]) == 0,
-                   sum([If(self.a[betaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]) >= 1),
+                Or(sum([If(self.a[betaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]) == Z3_Solver.bv0,
+                   UGE(sum([If(self.a[betaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]), Z3_Solver.bv1)),
                 "LabelAlphaOrBeta: " + str(self.labelIdx))
-            self.labelIdx += 1
-        if self.solverTypeOptimize:
-            self.solver.add(Or(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) == 0,
-                               sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) >= 1))
-        else:
-            self.solver.assert_and_track(
-                Or(sum([If(self.a[alphaCompId * self.nrVM + j], 1 , 0) for j in range(self.nrVM)]) == 0,
-                   sum([If(self.a[alphaCompId * self.nrVM + j], 1, 0)  for j in range(self.nrVM)]) >= 1), "LabelAlphaOrBeta: " + str(self.labelIdx))
             self.labelIdx += 1
 
         if self.solverTypeOptimize:
-            self.solver.add(sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) +
-                            sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) >= 1)
+            self.solver.add(Or(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]) == Z3_Solver.bv0,
+                               UGE(sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]), Z3_Solver.bv1)))
         else:
-            self.solver.assert_and_track(sum([If(self.a[betaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]) +
-                                         sum([If(self.a[alphaCompId * self.nrVM + j], 1, 0) for j in range(self.nrVM)]) >= 1, "LabelAlphaOrBeta: " + str(self.labelIdx))
+            self.solver.assert_and_track(
+                Or(sum([If(self.a[alphaCompId * self.nrVM + j], 1 , 0) for j in range(self.nrVM)]) == Z3_Solver.bv0,
+                   sum([If(self.a[alphaCompId * self.nrVM + j], 1, 0)  for j in range(self.nrVM)]) >= Z3_Solver.bv1), "LabelAlphaOrBeta: " + str(self.labelIdx))
+            self.labelIdx += 1
+
+        if self.solverTypeOptimize:
+            self.solver.add(UGE(sum([self.a[betaCompId * self.nrVM + j] for j in range(self.nrVM)]) +
+                            sum([self.a[alphaCompId * self.nrVM + j] for j in range(self.nrVM)]), Z3_Solver.bv1))
+        else:
+            self.solver.assert_and_track(UGE(
+                sum([If(self.a[betaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)])
+                +
+                sum([If(self.a[alphaCompId * self.nrVM + j], Z3_Solver.bv1, Z3_Solver.bv0) for j in range(self.nrVM)]),
+                Z3_Solver.bv1), "LabelAlphaOrBeta: " + str(self.labelIdx))
             self.labelIdx += 1
 
     def constraintsHardware(self, componentsRequirements):
@@ -406,7 +421,12 @@ class Z3_Solver(ManeuverProblem):
 
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([self.a[i * self.nrVM + k] * (componentsRequirements[i][0]) for i in range(self.nrComp)]) <= self.ProcProv[k])
+            #print("???", BitVec(self.ProcProv[k], 32))
+            tmp.append(ULE(sum([If(self.a[i * self.nrVM + k]==Z3_Solver.bv0,
+                               Z3_Solver.bv0,
+                               BitVecVal(componentsRequirements[i][0], 32)
+                                   ) for i in range(self.nrComp)]),
+                       self.ProcProv[k]))
         self.solver.add(tmp)
         # if self.solverTypeOptimize:
         #     self.solver.add(tmp)
@@ -417,7 +437,11 @@ class Z3_Solver(ManeuverProblem):
 
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([self.a[i * self.nrVM + k] * (componentsRequirements[i][1]) for i in range(self.nrComp)]) <= self.MemProv[k])
+            tmp.append(ULE(sum([If(self.a[i * self.nrVM + k]==Z3_Solver.bv0,
+                                   Z3_Solver.bv0,
+                                   BitVecVal(componentsRequirements[i][1], 32)
+                                   ) for i in range(self.nrComp)]),
+                           self.MemProv[k]))
         self.solver.add(tmp)
         # if self.solverTypeOptimize:
         #     self.solver.add(tmp)
@@ -428,7 +452,11 @@ class Z3_Solver(ManeuverProblem):
 
         tmp = []
         for k in range(self.nrVM):
-            tmp.append(sum([self.a[i * self.nrVM + k] * (componentsRequirements[i][2]) for i in range(self.nrComp)]) <= self.StorageProv[k])
+            tmp.append(ULE(sum([If(self.a[i * self.nrVM + k]==Z3_Solver.bv0,
+                                   Z3_Solver.bv0,
+                                   BitVecVal(componentsRequirements[i][2], 32)
+                                   ) for i in range(self.nrComp)]),
+                           self.StorageProv[k]))
         self.solver.add(tmp)
         # if self.solverTypeOptimize:
         #     self.solver.add(tmp)
@@ -436,8 +464,6 @@ class Z3_Solver(ManeuverProblem):
         #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
         #     self.labelIdx += 1
         # self.problem.logger.debug("tmp:{}".format(tmp))
-
-
 
 
     def run(self, smt2lib, smt2libsol):
@@ -449,7 +475,7 @@ class Z3_Solver(ManeuverProblem):
         """
 
         if self.solverTypeOptimize:
-            self.PriceProv = [Int('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
+            self.PriceProv = [BitVec('PriceProv%i' % j, 32) for j in range(1, self.nrVM + 1)]
             opt = sum(self.PriceProv)
             min = self.solver.minimize(opt)
 
@@ -460,7 +486,6 @@ class Z3_Solver(ManeuverProblem):
         stoptime = time.time()
 
         if not self.solverTypeOptimize:
-            print("???", self.solverTypeOptimize)
             c = self.solver.unsat_core()
             self.problem.logger.debug("unsat_constraints= {}".format(c))
             for cc in c:
@@ -478,15 +503,12 @@ class Z3_Solver(ManeuverProblem):
                 #print(l)
             ll = []
             for k in range(self.nrVM):
-                ll.append(model[self.PriceProv[k]]/1000.)
+                ll.append(model[self.PriceProv[k]]/1000)
             #print("Price for each machine")
             #print(ll)
 
         self.createSMT2LIBFileSolution(smt2libsol, status, model)
-        if self.solverTypeOptimize:
-            return min.value()/1000., ll, stoptime - startime
-        else:
-            return -1, ll, stoptime - startime
+        return min.value()/1000, ll, stoptime - startime
 
     def createSMT2LIBFile(self, fileName):
         """
@@ -494,12 +516,11 @@ class Z3_Solver(ManeuverProblem):
         :param fileName: string representing the file name storing the SMT2LIB formulation of the problem
         :return:
         """
-        #with open(fileName, 'w+') as fo:
-        #   fo.write("(set-logic QF_LIA)\n") # quantifier free linear integer-real arithmetic
-        #fo.close()
 
         with open(fileName, 'w+') as fo:
+            #fo.write("(set-logic QF_BV)\n")
             fo.truncate(0)
+            fo.write("(set-option :pp.bv-literals false)\n")
             fo.write(self.solver.sexpr())
         fo.close()
 

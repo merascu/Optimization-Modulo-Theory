@@ -63,6 +63,22 @@ class ManeuverProblem:
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_IntIntLessThan
             SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
+        if solver == "SMT_Solver_Z3_IntIntOr" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntOr
+            SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_IntIntOr" and option == "nonlinear":
+            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_IntIntOr
+            SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_BV" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_BV
+            SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_BV" and option == "nonlinear":
+            from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_BV
+            SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
         if SMTSolver.availableConfigurations is not None:
             self.restrictionsList.append(
                 RestrictionHardware(self._getComponentsHardwareRestrictions(), SMTSolver.availableConfigurations, self))
