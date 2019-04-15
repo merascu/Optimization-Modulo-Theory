@@ -1,0 +1,7 @@
+##########CountEncodings##########
+
+RealBool                      32                            
+BV                            7                             
+RealReal                      21                            
+IntIntOr                      15                            
+IntIntLessThan                12                            
