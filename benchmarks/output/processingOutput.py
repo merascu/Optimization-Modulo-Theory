@@ -37,8 +37,15 @@ def benchmarks(input_path, output_path, option):
                         partial_name = name.replace('.smt2', '')
 
                         if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "linear" :
+                            if type_theory == "PBC_ite":
+                                type_theory = "RealPBC"
+                            if type_theory == "PBC_nonite":
+                                type_theory = "RealPBC_Multiobjectives"
                             completeName_Path = os.path.join(save_path_QF_LRA, partial_name + "_" + type_theory + ".smt2")
-
+                            if type_theory == "RealPBC":
+                                type_theory = "PBC_ite"
+                            if type_theory == "RealPBC_Multiobjectives":
+                                type_theory = "PBC_nonite"
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "linear" :
                             completeName_Path = os.path.join(save_path_QF_LIA, partial_name + "_" + type_theory + ".smt2")
 
@@ -46,8 +53,15 @@ def benchmarks(input_path, output_path, option):
                             completeName_Path = os.path.join(save_path_QF_BV, partial_name + "_" + type_theory + ".smt2")
 
                         if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "nonlinear":
+                            if type_theory == "PBC_ite":
+                                type_theory = "RealPBC"
+                            if type_theory == "PBC_nonite":
+                                type_theory = "RealPBC_Multiobjectives"
                             completeName_Path = os.path.join(save_path_QF_NRA, partial_name + "_" + type_theory + ".smt2")
-
+                            if type_theory == "RealPBC":
+                                type_theory = "PBC_ite"
+                            if type_theory == "RealPBC_Multiobjectives":
+                                type_theory = "PBC_nonite"
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "nonlinear":
                             completeName_Path = os.path.join(save_path_QF_NIA, partial_name + "_" + type_theory + ".smt2")
 
