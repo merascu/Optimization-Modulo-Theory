@@ -1,3 +1,4 @@
+; for nuZ only (set-option :pp.bv-literals false)
 (set-option :pp.bv-literals false)
 (declare-fun C1_VM1 () (_ BitVec 32))
 (declare-fun C1_VM2 () (_ BitVec 32))
@@ -2239,3 +2240,5 @@
        PriceProv21
        PriceProv22))
 (check-sat)
+(get-objectives)
+(exit)
