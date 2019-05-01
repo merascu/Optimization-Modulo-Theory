@@ -1,0 +1,81 @@
+sat
+
+(objectives
+ ((bvadd PriceProv10 (bvadd PriceProv9 (bvadd PriceProv8 (bvadd PriceProv7 (bvadd PriceProv6 (bvadd PriceProv5 (bvadd PriceProv4 (bvadd PriceProv3 (bvadd PriceProv1 PriceProv2))))))))) (_ bv1584 32))
+)
+;; statistics
+(
+ :cnf-variables 4907
+ :cnf-literals 24164
+ :cnf-clauses 10149
+ :sat-checks 14
+ :sat-restarts 81
+ :sat-decisions 504643
+ :sat-random-decisions 288
+ :sat-propagations 1060939137
+ :sat-theory-propagations 0
+ :sat-watched-clauses-visited 1666748047
+ :sat-binary-watched-clauses-visited 735867924
+ :sat-conflicts 229143
+ :sat-theory-conflicts 0
+ :theory-necessary-interface-equalities 0
+ :theory-extra-interface-equalities 0
+ :euf-total-calls 516205
+ :euf-complete-calls 20
+ :euf-conflicts 0
+ :euf-implications 0
+ :euf-explanations 0
+ :euf-egraph-nodes-created 69362
+ :euf-egraph-nodes-deleted 62362
+ :euf-num-asserted-equalities 19019465
+ :euf-num-asserted-inequalities 14380535
+ :euf-num-merges 33159488
+ :euf-num-merges-undone 33159488
+ :euf-num-atoms-retold 14720
+ :la-total-calls 516205
+ :la-complete-calls 20
+ :la-conflicts 0
+ :la-implications 0
+ :la-explanations 0
+ :la-num-equalities-split 0
+ :la-num-tableau-rows 0
+ :la-num-tableau-variables 0
+ :bv-total-calls 516205
+ :bv-complete-calls 20
+ :bv-conflicts 0
+ :bv-implications 0
+ :bv-explanations 0
+ :fp-total-calls 516205
+ :fp-complete-calls 20
+ :fp-conflicts 0
+ :fp-implications 0
+ :fp-explanations 0
+ :arr-total-calls 516205
+ :arr-complete-calls 20
+ :arr-conflicts 0
+ :arr-implications 0
+ :arr-explanations 0
+ :arr-write-lemmas-added 0
+ :arr-row-lemmas-added 0
+ :arr-ext-lemmas-added 0
+ :arr-const-lemmas-added 0
+ :na-total-calls 516205
+ :na-complete-calls 20
+ :na-conflicts 0
+ :na-implications 0
+ :na-explanations 0
+ :na-num_nonlinear_multiplications 0
+ :na-num_axiom_checks 0
+ :na-num_zero_lemmas 0
+ :na-num_sign_lemmas 0
+ :na-num_neutral_lemmas 0
+ :na-num_proportionality_lemmas 0
+ :na-num_bound_lemmas 0
+ :na-num_tangent_lemmas 0
+ :na-num_monotonicity_lemmas 0
+ :na-num_sat_checks 0
+ :na-axiom_check_time 0.000
+ :na-sat_check_time 0.000
+ :time-seconds 227.107
+ :memory-mb 374.928
+)

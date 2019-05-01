@@ -1,0 +1,81 @@
+sat
+
+(objectives
+ ((bvadd PriceProv6 (bvadd PriceProv5 (bvadd PriceProv4 (bvadd PriceProv3 (bvadd PriceProv1 PriceProv2))))) (_ bv2889 32))
+)
+;; statistics
+(
+ :cnf-variables 1748
+ :cnf-literals 7599
+ :cnf-clauses 3232
+ :sat-checks 10
+ :sat-restarts 32
+ :sat-decisions 29339
+ :sat-random-decisions 10
+ :sat-propagations 150932747
+ :sat-theory-propagations 1
+ :sat-watched-clauses-visited 163488976
+ :sat-binary-watched-clauses-visited 102926340
+ :sat-conflicts 10741
+ :sat-theory-conflicts 0
+ :theory-necessary-interface-equalities 0
+ :theory-extra-interface-equalities 0
+ :euf-total-calls 30755
+ :euf-complete-calls 8
+ :euf-conflicts 0
+ :euf-implications 1
+ :euf-explanations 0
+ :euf-egraph-nodes-created 8589
+ :euf-egraph-nodes-deleted 5362
+ :euf-num-asserted-equalities 653052
+ :euf-num-asserted-inequalities 453428
+ :euf-num-merges 1168369
+ :euf-num-merges-undone 1168369
+ :euf-num-atoms-retold 1120
+ :la-total-calls 30755
+ :la-complete-calls 8
+ :la-conflicts 0
+ :la-implications 0
+ :la-explanations 0
+ :la-num-equalities-split 0
+ :la-num-tableau-rows 0
+ :la-num-tableau-variables 0
+ :bv-total-calls 30755
+ :bv-complete-calls 8
+ :bv-conflicts 0
+ :bv-implications 0
+ :bv-explanations 0
+ :fp-total-calls 30755
+ :fp-complete-calls 8
+ :fp-conflicts 0
+ :fp-implications 0
+ :fp-explanations 0
+ :arr-total-calls 30755
+ :arr-complete-calls 8
+ :arr-conflicts 0
+ :arr-implications 0
+ :arr-explanations 0
+ :arr-write-lemmas-added 0
+ :arr-row-lemmas-added 0
+ :arr-ext-lemmas-added 0
+ :arr-const-lemmas-added 0
+ :na-total-calls 30755
+ :na-complete-calls 8
+ :na-conflicts 0
+ :na-implications 0
+ :na-explanations 0
+ :na-num_nonlinear_multiplications 0
+ :na-num_axiom_checks 0
+ :na-num_zero_lemmas 0
+ :na-num_sign_lemmas 0
+ :na-num_neutral_lemmas 0
+ :na-num_proportionality_lemmas 0
+ :na-num_bound_lemmas 0
+ :na-num_tangent_lemmas 0
+ :na-num_monotonicity_lemmas 0
+ :na-num_sat_checks 0
+ :na-axiom_check_time 0.000
+ :na-sat_check_time 0.000
+ :time-seconds 18.478
+ :memory-mb 81.342
+)

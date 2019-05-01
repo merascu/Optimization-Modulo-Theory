@@ -1,0 +1,81 @@
+sat
+
+(objectives
+ ((bvadd PriceProv8 (bvadd PriceProv7 (bvadd PriceProv6 (bvadd PriceProv5 (bvadd PriceProv4 (bvadd PriceProv3 (bvadd PriceProv1 PriceProv2))))))) (_ bv14432 32))
+)
+;; statistics
+(
+ :cnf-variables 703
+ :cnf-literals 1728
+ :cnf-clauses 839
+ :sat-checks 9
+ :sat-restarts 36
+ :sat-decisions 51671
+ :sat-random-decisions 17
+ :sat-propagations 166456404
+ :sat-theory-propagations 0
+ :sat-watched-clauses-visited 195367831
+ :sat-binary-watched-clauses-visited 113348897
+ :sat-conflicts 25211
+ :sat-theory-conflicts 0
+ :theory-necessary-interface-equalities 0
+ :theory-extra-interface-equalities 0
+ :euf-total-calls 54548
+ :euf-complete-calls 8
+ :euf-conflicts 0
+ :euf-implications 0
+ :euf-explanations 0
+ :euf-egraph-nodes-created 19255
+ :euf-egraph-nodes-deleted 16840
+ :euf-num-asserted-equalities 1118725
+ :euf-num-asserted-inequalities 444583
+ :euf-num-merges 2945725
+ :euf-num-merges-undone 2945725
+ :euf-num-atoms-retold 3904
+ :la-total-calls 54548
+ :la-complete-calls 8
+ :la-conflicts 0
+ :la-implications 0
+ :la-explanations 0
+ :la-num-equalities-split 0
+ :la-num-tableau-rows 0
+ :la-num-tableau-variables 0
+ :bv-total-calls 54548
+ :bv-complete-calls 8
+ :bv-conflicts 0
+ :bv-implications 0
+ :bv-explanations 0
+ :fp-total-calls 54548
+ :fp-complete-calls 8
+ :fp-conflicts 0
+ :fp-implications 0
+ :fp-explanations 0
+ :arr-total-calls 54548
+ :arr-complete-calls 8
+ :arr-conflicts 0
+ :arr-implications 0
+ :arr-explanations 0
+ :arr-write-lemmas-added 0
+ :arr-row-lemmas-added 0
+ :arr-ext-lemmas-added 0
+ :arr-const-lemmas-added 0
+ :na-total-calls 54548
+ :na-complete-calls 8
+ :na-conflicts 0
+ :na-implications 0
+ :na-explanations 0
+ :na-num_nonlinear_multiplications 0
+ :na-num_axiom_checks 0
+ :na-num_zero_lemmas 0
+ :na-num_sign_lemmas 0
+ :na-num_neutral_lemmas 0
+ :na-num_proportionality_lemmas 0
+ :na-num_bound_lemmas 0
+ :na-num_tangent_lemmas 0
+ :na-num_monotonicity_lemmas 0
+ :na-num_sat_checks 0
+ :na-axiom_check_time 0.000
+ :na-sat_check_time 0.000
+ :time-seconds 23.816
+ :memory-mb 57.623
+)
