@@ -5564,3 +5564,5 @@ Target solver: Z3
    PriceProv10
    PriceProv11))
 (check-sat)
+(get-objectives)
+(exit)

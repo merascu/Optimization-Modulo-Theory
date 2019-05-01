@@ -16548,3 +16548,5 @@ Target solver: Z3
 (minimize (+ 0.0 m111 m211 m311 m411 m511 m611 m711 m811 m911 m1011))
 (minimize (+ 0.0 s111 s211 s311 s411 s511 s611 s711 s811 s911 s1011))
 (check-sat)
+(get-objectives)
+(exit)

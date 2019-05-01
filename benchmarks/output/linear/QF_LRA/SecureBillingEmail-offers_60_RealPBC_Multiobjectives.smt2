@@ -2064,3 +2064,5 @@ Target solver: Z3
 (minimize (+ 0.0 m15 m25 m35 m45 m55))
 (minimize (+ 0.0 s15 s25 s35 s45 s55))
 (check-sat)
+(get-objectives)
+(exit)
