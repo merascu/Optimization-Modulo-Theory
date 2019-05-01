@@ -1,0 +1,16 @@
+
+0) URGENT pana joi seara: Fa doar cate o rulare ca sa vedem cat se scaleaza.
+
+1) Cand termini cele de mai sus: Apoi pentru cazurile in care OptiMathSAT da mai bine ca Z3 sau foarte foarte apropiat, faci 5 rulari (vezi cum am fct pt BV).
+
+2) Trebuie puse testele si pt OptiMathSAT: vezi cum am facut pentru bitvectors.
+
+3) in benchmarks si experimental-results->SMT2 nu ai adaugat (get-objectives) la sfarsit. De fapt, ar trebui adaugat:
+(get-objectives)
+(exit)
+in toate SMT2 files.
+Cred ca cel mai bine verifici daca **toate** fisierele din smt2 au aceste comenzi si apoi generezi benckmarks din nou!
+
+4) in bechmarks cateodata e *U*nknown alta data e *u*nknown; Nu ar trebui sa fie intre ghilimele? Doar intreb!
+
+5) trebuie ***peste tot*** (momentan este doar in numele benchmarks!) unde avem PBC_ite sa transformam in RealPBC; unde avem PBC_nonite transformam in RealPBCMultiObjectives.
