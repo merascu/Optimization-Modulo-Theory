@@ -1515,3 +1515,5 @@
 (minimize (+ 0.0 m18 m28 m38 m48 m58))
 (minimize (+ 0.0 s18 s28 s38 s48 s58))
 (check-sat)
+(get-objectives)
+(exit)

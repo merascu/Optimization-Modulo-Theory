@@ -1258,3 +1258,5 @@
    PriceProv9
    PriceProv10))
 (check-sat)
+(get-objectives)
+(exit)

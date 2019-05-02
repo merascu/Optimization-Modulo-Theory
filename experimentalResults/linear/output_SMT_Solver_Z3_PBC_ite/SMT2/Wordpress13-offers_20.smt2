@@ -5567,3 +5567,5 @@
    PriceProv24
    PriceProv25))
 (check-sat)
+(get-objectives)
+(exit)

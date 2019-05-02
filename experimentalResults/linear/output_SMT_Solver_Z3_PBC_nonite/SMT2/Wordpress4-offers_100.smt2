@@ -6889,3 +6889,5 @@
 (minimize (+ 0.0 m110 m210 m310 m410 m510))
 (minimize (+ 0.0 s110 s210 s310 s410 s510))
 (check-sat)
+(get-objectives)
+(exit)

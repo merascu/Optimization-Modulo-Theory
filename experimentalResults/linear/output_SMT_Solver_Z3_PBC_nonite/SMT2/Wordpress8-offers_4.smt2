@@ -1822,3 +1822,5 @@
 (minimize (+ 0.0 m117 m217 m317 m417 m517))
 (minimize (+ 0.0 s117 s217 s317 s417 s517))
 (check-sat)
+(get-objectives)
+(exit)

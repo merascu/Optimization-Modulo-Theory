@@ -8494,3 +8494,5 @@
    PriceProv27
    PriceProv28))
 (check-sat)
+(get-objectives)
+(exit)

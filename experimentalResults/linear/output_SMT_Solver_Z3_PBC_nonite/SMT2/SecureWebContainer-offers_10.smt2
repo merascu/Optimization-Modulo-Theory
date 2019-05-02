@@ -729,3 +729,5 @@
 (minimize (+ 0.0 m16 m26 m36 m46 m56))
 (minimize (+ 0.0 s16 s26 s36 s46 s56))
 (check-sat)
+(get-objectives)
+(exit)

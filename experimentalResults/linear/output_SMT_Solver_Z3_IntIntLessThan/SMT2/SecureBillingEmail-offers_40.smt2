@@ -1397,3 +1397,5 @@
     StorageProv5))
 (minimize (+ 0 PriceProv1 PriceProv2 PriceProv3 PriceProv4 PriceProv5))
 (check-sat)
+(get-objectives)
+(exit)

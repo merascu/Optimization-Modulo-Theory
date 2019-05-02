@@ -3909,3 +3909,5 @@
   (<= a!1 StorageProv6)))
 (minimize (+ 0.0 PriceProv1 PriceProv2 PriceProv3 PriceProv4 PriceProv5 PriceProv6))
 (check-sat)
+(get-objectives)
+(exit)
