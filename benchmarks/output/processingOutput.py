@@ -36,18 +36,32 @@ def benchmarks(input_path, output_path, option):
 
                         partial_name = name.replace('.smt2', '')
 
-                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "RealPBC" or type_theory == "RealPBCMultiObjectives") and option == "linear" :
+                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "linear" :
+                            if type_theory == "PBC_ite":
+                                type_theory = "RealPBC"
+                            if type_theory == "PBC_nonite":
+                                type_theory = "RealPBC_Multiobjectives"
                             completeName_Path = os.path.join(save_path_QF_LRA, partial_name + "_" + type_theory + ".smt2")
-
+                            if type_theory == "RealPBC":
+                                type_theory = "PBC_ite"
+                            if type_theory == "RealPBC_Multiobjectives":
+                                type_theory = "PBC_nonite"
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "linear" :
                             completeName_Path = os.path.join(save_path_QF_LIA, partial_name + "_" + type_theory + ".smt2")
 
                         if (type_theory == "BV") and option == "linear" :
                             completeName_Path = os.path.join(save_path_QF_BV, partial_name + "_" + type_theory + ".smt2")
 
-                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "RealPBC" or type_theory == "RealPBCMultiObjectives") and option == "nonlinear":
+                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "nonlinear":
+                            if type_theory == "PBC_ite":
+                                type_theory = "RealPBC"
+                            if type_theory == "PBC_nonite":
+                                type_theory = "RealPBC_Multiobjectives"
                             completeName_Path = os.path.join(save_path_QF_NRA, partial_name + "_" + type_theory + ".smt2")
-
+                            if type_theory == "RealPBC":
+                                type_theory = "PBC_ite"
+                            if type_theory == "RealPBC_Multiobjectives":
+                                type_theory = "PBC_nonite"
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "nonlinear":
                             completeName_Path = os.path.join(save_path_QF_NIA, partial_name + "_" + type_theory + ".smt2")
 
@@ -58,7 +72,7 @@ def benchmarks(input_path, output_path, option):
                         file = open(completeName_Path, "w")
                         file.write("(set-info :smt-lib-version 2.6)\n")
 
-                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "RealPBC" or type_theory == "RealPBCMultiObjectives") and option == "linear":
+                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "linear":
                             file.write("(set-logic QF_LRA)\n")
 
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "linear":
@@ -67,7 +81,7 @@ def benchmarks(input_path, output_path, option):
                         if (type_theory == "BV") and option == "linear":
                             file.write("(set-logic QF_BV)\n")
 
-                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "RealPBC" or type_theory == "RealPBCMultiObjectives") and option == "nonlinear":
+                        if (type_theory == "RealReal" or type_theory == "RealBool" or type_theory == "PBC_ite" or type_theory == "PBC_nonite") and option == "nonlinear":
                             file.write("(set-logic QF_NRA)\n")
 
                         if (type_theory == "IntIntOr" or type_theory == "IntIntLessThan") and option == "nonlinear":
@@ -88,14 +102,14 @@ def benchmarks(input_path, output_path, option):
                         aux_path = os.path.join(root, name).split('/SMT2')[0] + "/csv/" + name.split('.smt2')[0] + ".csv"
 
                         if os.stat(aux_path).st_size == 0:
-                            file.write(" unknown)\n")
+                            file.write(" unknown\n")
                             file.write("\n")
                         else:
                             with open(aux_path) as fin:
                                 next(fin)
                                 for line in fin:
                                     min_price = line.split(None, 1)[0]
-                                file.write(" " + min_price.split(',')[0] + ")\n")
+                                file.write(" " + min_price.split(',')[0] + "\n")
                                 file.write("\n")
                         with open(os.path.join(root, name)) as f:
                             lines = f.readlines()
