@@ -72,8 +72,8 @@ if __name__ == "__main__":
     # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_80.json",
     #           "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
 
-    benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "nonlinear")
-    benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "linear")
+    #benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "nonlinear")
+    #benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "linear")
 
-    # statisticsBest("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/statisticsExperimentalResults/output","nonlinear")
+    statisticsBest("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/statisticsExperimentalResults/output","linear")
 

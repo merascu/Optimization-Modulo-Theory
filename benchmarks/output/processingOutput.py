@@ -102,14 +102,14 @@ def benchmarks(input_path, output_path, option):
                         aux_path = os.path.join(root, name).split('/SMT2')[0] + "/csv/" + name.split('.smt2')[0] + ".csv"
 
                         if os.stat(aux_path).st_size == 0:
-                            file.write(" unknown\n")
+                            file.write(" unknown)\n")
                             file.write("\n")
                         else:
                             with open(aux_path) as fin:
                                 next(fin)
                                 for line in fin:
                                     min_price = line.split(None, 1)[0]
-                                file.write(" " + min_price.split(',')[0] + "\n")
+                                file.write(" " + min_price.split(',')[0] + ")\n")
                                 file.write("\n")
                         with open(os.path.join(root, name)) as f:
                             lines = f.readlines()

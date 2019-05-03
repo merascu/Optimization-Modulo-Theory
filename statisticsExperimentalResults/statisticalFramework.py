@@ -48,6 +48,7 @@ def statisticsBest(path_read, path_sol, option):
 
         j = 1
         while j < len(path_files):
+            print(path_files[j])
             app1 = path_files[j].split("csv/", 1)[1]
             if app == app1:
                 if os.stat(path_files[j]).st_size > 0:
