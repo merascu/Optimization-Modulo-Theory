@@ -68,17 +68,13 @@ def runZ3(problem_file_name, configurations_file_name, solver, option):
 if __name__ == "__main__":
 
 
-    runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
-          "SMT_Solver_Z3_RealPBC", "linear")
+    #runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #    "SMT_Solver_Z3_RealPBC", "linear")
 
-    # ??? benchmarks("../Optimization-Modulo-Theory/experimentalResults",
-    #            "../Optimization-Modulo-Theory/benchmarks/output",
-    #            "nonlinear")
+     #benchmarks("../experimentalResults", "../benchmarks/output", "linear")
 
-    # ???benchmarks("../Optimization-Modulo-Theory/experimentalResults",
-    #            "../Optimization-Modulo-Theory/benchmarks/output", "linear")
+     #benchmarks("../experimentalResults", "../benchmarks/output", "nonlinear")
 
-    # ???statisticsBest(".../Optimization-Modulo-Theory/experimentalResults",
-    #                "../Optimization-Modulo-Theory/statisticsExperimentalResults/output",
-    #                "linear")
+    statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output","linear")
 
+    statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output", "nonlinear")

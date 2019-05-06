@@ -158,4 +158,4 @@ def statisticsBest(path_read, path_sol, option):
     f.close()
 
 if __name__ == "__main__":
-    statisticsBest("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/statisticsExperimentalResults/output","linear")
+    statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output","linear")
