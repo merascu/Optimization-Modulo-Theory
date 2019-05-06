@@ -1,7 +1,6 @@
-1) Madalina modified output_SMT_Solver_Z3_BV
-2) Razvan: TODO generate new benchmarks?
+0) Test files from gdrive: the lastest and final results? NO: still some for BV
 3) Benchmarks separated for Z3 and OptiMathSAT, linear/nonlinear
 4) 5 runs for OptiMathSAT
-5) mainTestFile check the ???
 6) usermanual on git TODO Razvan parts
 7) schema for json (TODO Madalina)
+8) renanme OptiMathSAT solution file csv to smt2
