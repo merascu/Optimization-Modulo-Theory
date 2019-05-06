@@ -22,7 +22,7 @@ def read_available_configurations(fileConfigurations):
     print(availableConfigurations)
     return availableConfigurations
 
-def runZ3Once(problem_file_name, configurations_file_name, solver, option):
+def runZ3(problem_file_name, configurations_file_name, solver, option):
     # option: linear or nonlinear
     filename1 = problem_file_name.split("/").pop().split(".")[0]
     filename2 = configurations_file_name.split("/").pop().split(".")[0]
@@ -68,12 +68,17 @@ def runZ3Once(problem_file_name, configurations_file_name, solver, option):
 if __name__ == "__main__":
 
 
-    # TODO
-    # runZ3Once("../testInstances/Wordpress8.json", "../testInstances/offersICCP2018/offers_80.json",
-    #           "SMT_Solver_Z3_IntIntLessThan", "nonlinear")
+    runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+          "SMT_Solver_Z3_RealPBC", "linear")
 
-    #benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "nonlinear")
-    #benchmarks("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/benchmarks/output", "linear")
+    # ??? benchmarks("../Optimization-Modulo-Theory/experimentalResults",
+    #            "../Optimization-Modulo-Theory/benchmarks/output",
+    #            "nonlinear")
 
-    statisticsBest("/Users/razvanmetes/Optimization-Modulo-Theory/experimentalResults", "/Users/razvanmetes/Optimization-Modulo-Theory/statisticsExperimentalResults/output","linear")
+    # ???benchmarks("../Optimization-Modulo-Theory/experimentalResults",
+    #            "../Optimization-Modulo-Theory/benchmarks/output", "linear")
+
+    # ???statisticsBest(".../Optimization-Modulo-Theory/experimentalResults",
+    #                "../Optimization-Modulo-Theory/statisticsExperimentalResults/output",
+    #                "linear")
 

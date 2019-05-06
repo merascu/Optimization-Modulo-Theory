@@ -8,6 +8,7 @@ from RecomandEngine.restrictions.RestrictionNumberOfInstances import Restriction
 from RecomandEngine.restrictions.RestrictionHardware import RestrictionHardware
 from RecomandEngine.problem.Component import Component
 import logging.config
+import sys
 
 class ManeuverProblem:
     def __init__(self):
@@ -42,7 +43,6 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_RealBool" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealBool
             SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
         if solver == "SMT_Solver_Z3_RealBool" and option == "nonlinear":
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealBool
             SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -50,7 +50,6 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_RealReal" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealReal
             SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
         if solver == "SMT_Solver_Z3_RealReal" and option == "nonlinear":
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_RealReal
             SMTSolver = SMT_Solver_Z3_RealReal.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -58,7 +57,6 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_IntIntLessThan" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntLessThan
             SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
         if solver == "SMT_Solver_Z3_IntIntLessThan" and option == "nonlinear":
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_IntIntLessThan
             SMTSolver = SMT_Solver_Z3_IntIntLessThan.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -66,7 +64,6 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_IntIntOr" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntOr
             SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
         if solver == "SMT_Solver_Z3_IntIntOr" and option == "nonlinear":
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_IntIntOr
             SMTSolver = SMT_Solver_Z3_IntIntOr.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -74,10 +71,22 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_BV" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_BV
             SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
-
         if solver == "SMT_Solver_Z3_BV" and option == "nonlinear":
             from RecomandEngine.exactsolvers.nonlinear import SMT_Solver_Z3_BV
             SMTSolver = SMT_Solver_Z3_BV.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_RealPBC" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealPBC
+            SMTSolver = SMT_Solver_Z3_RealPBC.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        if solver == "SMT_Solver_Z3_RealPBC" and option == "nonlinear":
+            sys.exit("No support for nonlinear PBC")
+
+
+        if solver == "SMT_Solver_Z3_RealPBCMultiObjectives" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealPBCMultiObjectives
+            SMTSolver = SMT_Solver_Z3_RealPBCMultiObjectives.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+        if solver == "SMT_Solver_Z3_RealPBCMultiObjectives" and option == "nonlinear":
+            sys.exit("No support for nonlinear PBC")
 
         if SMTSolver.availableConfigurations is not None:
             self.restrictionsList.append(
