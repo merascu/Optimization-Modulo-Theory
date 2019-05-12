@@ -1,5 +1,7 @@
 from RecomandEngine.problem.ProblemDefinition import ManeuverProblem
-from benchmarks.output.processingOutput import benchmarks
+from benchmarks.output_Z3.processingBenchmarks_Z3 import benchmarks_Z3
+from benchmarks.output_OptiMathSAT.processingBenchmarks_OptiMathSAT import benchmarks_OptiMathSAT
+
 from statisticsExperimentalResults.statisticalFramework import statisticsBest
 
 import os
@@ -71,10 +73,12 @@ if __name__ == "__main__":
     #runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
     #    "SMT_Solver_Z3_RealPBC", "linear")
 
-     #benchmarks("../experimentalResults", "../benchmarks/output", "linear")
+     #benchmarks_Z3("../experimentalResults", "../benchmarks/output_Z3", "linear")
 
-     #benchmarks("../experimentalResults", "../benchmarks/output", "nonlinear")
+     benchmarks_OptiMathSAT("../experimentalResults", "../benchmarks/output_OptiMathSAT", "linear")
 
-    statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output","linear")
+     #benchmarks_Z3("../experimentalResults", "../benchmarks/output_Z3", "nonlinear")
 
-    statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output", "nonlinear")
+    #statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output","linear")
+
+    #statisticsBest("../experimentalResults", "../statisticsExperimentalResults/output", "nonlinear")
