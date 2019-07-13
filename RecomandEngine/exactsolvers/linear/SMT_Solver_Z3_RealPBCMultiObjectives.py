@@ -55,17 +55,7 @@ class Z3_Solver(ManeuverProblem):
         self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
         self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
 
-        #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
-        # elements of VM should be positive
-        #for i in range(len(self.vm)):
-        #    self.solver.add(Or([self.vm[i] == 0, self.vm[i] == 1]))
-
         self.a = [Bool('C%i_VM%i' % (i + 1, j + 1)) for i in range(self.nrComp) for j in range(self.nrVM)]
-
-        # elements of the association matrix should be just 0 or 1
-        # for i in range(len(self.a)):
-        #     self.solver.add(Or([self.a[i] == 0, self.a[i] == 1]))
-        # #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
 
         self.vmType = [Real('VM%iType' % j) for j in range(1, self.nrVM + 1)]
         # vmType is one of the types from availableConfigurations
@@ -100,15 +90,6 @@ class Z3_Solver(ManeuverProblem):
                                 )
                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
-
-        # not needed If a machine is leased then its assignment vector is 1
-        # for j in range(self.nrVM):
-        #     if self.solverTypeOptimize:
-        #         self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1))
-        #     else:
-        #         self.solver.assert_and_track(
-        #             Implies(sum([self.a[i + j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1), "Label: " + str(self.labelIdx))
-        #         self.labelIdx += 1
 
     def RestrictionConflict(self, alphaCompId, conflictCompsIdList):
         """
@@ -454,50 +435,6 @@ class Z3_Solver(ManeuverProblem):
         self.solver.add(tmpP)
         self.solver.add(tmpM)
         self.solver.add(tmpS)
-
-        # self.p = [Real('p%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        # tmp = []
-        # for k in range(self.nrVM):
-        #     pLst = []
-        #     for i in range(self.nrComp):
-        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-        #                                 0 == self.p[i * self.nrVM + k]))
-        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
-        #                                 self.p[i * self.nrVM + k] == componentsRequirements[i][0]))
-        #         pLst.append(self.p[i * self.nrVM + k])
-        #     tmp.append(sum(pLst) <= self.ProcProv[k])
-        #     self.solver.minimize(sum(pLst))
-        # self.solver.add(tmp)
-        #
-        # self.m = [Real('m%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        # tmp = []
-        # for k in range(self.nrVM):
-        #     mLst = []
-        #     for i in range(self.nrComp):
-        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-        #                                 0 == self.m[i * self.nrVM + k]))
-        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
-        #                                 self.m[i * self.nrVM + k] == componentsRequirements[i][1]))
-        #         mLst.append(self.m[i * self.nrVM + k])
-        #     tmp.append(sum(mLst) <= self.MemProv[k])
-        #     self.solver.minimize(sum(mLst))
-        # self.solver.add(tmp)
-        #
-        # self.s = [Real('s%i%i' % (k + 1, i + 1)) for k in range(self.nrComp) for i in range(self.nrVM)]
-        # tmp = []
-        # for k in range(self.nrVM):
-        #     sLst = []
-        #     for i in range(self.nrComp):
-        #         self.solver.add(Implies(Not(self.a[i * self.nrVM + k]),
-        #                                 0 == self.s[i * self.nrVM + k]))
-        #         self.solver.add(Implies(self.a[i * self.nrVM + k],
-        #                                 self.s[i * self.nrVM + k] == componentsRequirements[i][2]))
-        #         sLst.append(self.s[i * self.nrVM + k])
-        #     tmp.append(sum(sLst) <= self.StorageProv[k])
-        #     self.solver.minimize(sum(sLst))
-        # self.solver.add(tmp)
-
-
 
     def run(self, smt2lib, smt2libsol):
         """

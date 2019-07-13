@@ -108,15 +108,6 @@ class Z3_Solver(ManeuverProblem):
                                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
 
-        # not needed If a machine is leased then its assignment vector is 1
-        # for j in range(self.nrVM):
-        #     if self.solverTypeOptimize:
-        #         self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1))
-        #     else:
-        #         self.solver.assert_and_track(
-        #             Implies(sum([self.a[i + j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1), "Label: " + str(self.labelIdx))
-        #         self.labelIdx += 1
-
     def RestrictionConflict(self, alphaCompId, conflictCompsIdList):
         """
         Constraint describing the conflict between components. The 2 params. should not be placed on the same VM
@@ -419,18 +410,12 @@ class Z3_Solver(ManeuverProblem):
 
         tmp = []
         for k in range(self.nrVM):
-            #print("???", BitVec(self.ProcProv[k], 32))
             tmp.append(ULE(sum([If(self.a[i * self.nrVM + k]==Z3_Solver.bv0,
                                Z3_Solver.bv0,
                                BitVecVal(componentsRequirements[i][0], 32)
                                    ) for i in range(self.nrComp)]),
                        self.ProcProv[k]))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
         self.problem.logger.debug("tmp:{}".format(tmp))
 
         tmp = []
@@ -441,11 +426,6 @@ class Z3_Solver(ManeuverProblem):
                                    ) for i in range(self.nrComp)]),
                            self.MemProv[k]))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
         self.problem.logger.debug("tmp:{}".format(tmp))
 
         tmp = []
@@ -456,13 +436,6 @@ class Z3_Solver(ManeuverProblem):
                                    ) for i in range(self.nrComp)]),
                            self.StorageProv[k]))
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
-        # self.problem.logger.debug("tmp:{}".format(tmp))
-
 
     def run(self, smt2lib, smt2libsol):
         """

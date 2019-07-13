@@ -77,37 +77,37 @@ class Z3_Solver(ManeuverProblem):
         # combinatorial variables for SMT-RAT
         # A combinatorial variable x such that (x = 1) or (x = 3) [or ...], where [or ...] is optional
 
-        # for j in range(self.nrVM):
-        #     PriceProvLst = []
-        #     ProcProvLst = []
-        #     MemProvLst = []
-        #     StorageProvLst = []
-        #     for t in range(len(self.availableConfigurations)):
-        #         PriceProvLst.append(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1] / 1000.))
-        #         ProcProvLst.append(self.ProcProv[j] == (self.availableConfigurations[t][1] / 1.))
-        #         MemProvLst.append(self.MemProv[j] == (self.availableConfigurations[t][2] / 1000.))
-        #         StorageProvLst.append(self.StorageProv[j] == (self.availableConfigurations[t][3] / 1000.))
-        #
-        #     PriceProvLst.append(self.PriceProv[j] == 0)
-        #     ProcProvLst.append(self.ProcProv[j] == 0)
-        #     MemProvLst.append(self.MemProv[j] == 0)
-        #     StorageProvLst.append(self.StorageProv[j] == 0)
-        #     print("PriceProvLst ", PriceProvLst)
-        #
-        #     if self.solverTypeOptimize:
-        #         self.solver.add(Or(PriceProvLst))
-        #         self.solver.add(Or(ProcProvLst))
-        #         self.solver.add(Or(MemProvLst))
-        #         self.solver.add(Or(StorageProvLst))
-        #     else:
-        #         self.solver.assert_and_track(Or(PriceProvLst)), "LabelOffer" + str(self.labelIdx_offer)
-        #         self.labelIdx_offer += 1
-        #         self.solver.assert_and_track(Or(ProcProvLst)), "LabelOffer" + str(self.labelIdx_offer)
-        #         self.labelIdx_offer += 1
-        #         self.solver.assert_and_track(Or(MemProvLst)), "LabelOffer" + str(self.labelIdx_offer)
-        #         self.labelIdx_offer += 1
-        #         self.solver.assert_and_track(Or(StorageProvLst)), "LabelOffer" + str(self.labelIdx_offer)
-        #         self.labelIdx_offer += 1
+        for j in range(self.nrVM):
+            PriceProvLst = []
+            ProcProvLst = []
+            MemProvLst = []
+            StorageProvLst = []
+            for t in range(len(self.availableConfigurations)):
+                PriceProvLst.append(self.PriceProv[j] == (self.availableConfigurations[t][len(self.availableConfigurations[0]) - 1] / 1000.))
+                ProcProvLst.append(self.ProcProv[j] == (self.availableConfigurations[t][1] / 1.))
+                MemProvLst.append(self.MemProv[j] == (self.availableConfigurations[t][2] / 1000.))
+                StorageProvLst.append(self.StorageProv[j] == (self.availableConfigurations[t][3] / 1000.))
+
+            PriceProvLst.append(self.PriceProv[j] == 0)
+            ProcProvLst.append(self.ProcProv[j] == 0)
+            MemProvLst.append(self.MemProv[j] == 0)
+            StorageProvLst.append(self.StorageProv[j] == 0)
+            print("PriceProvLst ", PriceProvLst)
+
+            if self.solverTypeOptimize:
+                self.solver.add(Or(PriceProvLst))
+                self.solver.add(Or(ProcProvLst))
+                self.solver.add(Or(MemProvLst))
+                self.solver.add(Or(StorageProvLst))
+            else:
+                self.solver.assert_and_track(Or(PriceProvLst)), "LabelOffer" + str(self.labelIdx_offer)
+                self.labelIdx_offer += 1
+                self.solver.assert_and_track(Or(ProcProvLst)), "LabelOffer" + str(self.labelIdx_offer)
+                self.labelIdx_offer += 1
+                self.solver.assert_and_track(Or(MemProvLst)), "LabelOffer" + str(self.labelIdx_offer)
+                self.labelIdx_offer += 1
+                self.solver.assert_and_track(Or(StorageProvLst)), "LabelOffer" + str(self.labelIdx_offer)
+                self.labelIdx_offer += 1
 
         # encode offers
         for t in range(len(self.availableConfigurations)):
@@ -130,15 +130,6 @@ class Z3_Solver(ManeuverProblem):
                                                 )
                                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
-
-        # not needed If a machine is leased then its assignment vector is 1
-        # for j in range(self.nrVM):
-        #     if self.solverTypeOptimize:
-        #         self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1))
-        #     else:
-        #         self.solver.assert_and_track(
-        #             Implies(sum([self.a[i + j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1), "Label: " + str(self.labelIdx))
-        #         self.labelIdx += 1
 
     def RestrictionConflict(self, alphaCompId, conflictCompsIdList):
         """
@@ -424,24 +415,12 @@ class Z3_Solver(ManeuverProblem):
         for k in range(self.nrVM):
             tmp.append(sum([self.a[i * self.nrVM + k] * (componentsRequirements[i][1]/1000.) for i in range(self.nrComp)]) <= self.MemProv[k])
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
         self.problem.logger.debug("tmp:{}".format(tmp))
 
         tmp = []
         for k in range(self.nrVM):
             tmp.append(sum([self.a[i * self.nrVM + k] * (componentsRequirements[i][2]/1000.) for i in range(self.nrComp)]) <= self.StorageProv[k])
         self.solver.add(tmp)
-        # if self.solverTypeOptimize:
-        #     self.solver.add(tmp)
-        # else:
-        #     self.solver.assert_and_track(tmp, "Label: " + str(self.labelIdx))
-        #     self.labelIdx += 1
-        # self.problem.logger.debug("tmp:{}".format(tmp))
-
 
     def run(self, smt2lib, smt2libsol):
         """
