@@ -1,6 +1,16 @@
-0) Test files from gdrive: the lastest and final results? NO: still some for BV
-3) Benchmarks separated for Z3 and OptiMathSAT, linear/nonlinear
-4) 5 runs for OptiMathSAT
-6) usermanual on git TODO Razvan parts
-7) schema for json (TODO Madalina)
-8) renanme OptiMathSAT solution file csv to smt2
+0) Can not transform the objective function into assert-soft like in [1],
+since the value of the weight is not known as below
+
+; Optimization goals are expressed implicitly via assert-soft command.
+(assert-soft (not y1) :id num_servers)
+(assert-soft (not y2) :id num_servers)
+(assert-soft (not y3) :id num_servers)
+
+(assert-soft (not y1) :id costs :weight 10)
+(assert-soft (not y2) :id costs :weight 5)
+(assert-soft (not y3) :id costs :weight 20)
+
+1)
+
+
+[1] https://rise4fun.com/Z3/tutorial/optimization
