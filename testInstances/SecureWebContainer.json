@@ -46,13 +46,13 @@
 "IP" : {},
 "budget": {"value":500, "type":"USDolars"},
 "comment-restrictions": "Number 3 from LowerBound below is LoR=LevelOfRedundancy; FullDeployment: compsIdList: the list of components that component alpha is in conflict with",
-"restrictions" : [{"type":"Conflicts", "alphaCompId":1, "compsIdList":[2, 3, 4, 5]},
-                  {"type":"Conflicts", "alphaCompId":2, "compsIdList":[3]},
+"restrictions" : [{"type":"Conflicts", "alphaCompId":1, "compsIdList":[2, 3]},
                   {"type":"EqualBound",  "compsIdList":[1], "bound": 1},
                   {"type":"LowerBound",  "compsIdList":[2, 3], "bound": 3},
+                  {"type":"Conflicts", "alphaCompId":2, "compsIdList":[3]},
                   {"type":"Conflicts", "alphaCompId":4, "compsIdList":[1, 2, 3, 5]},
-                  {"type":"FullDeployment", "alphaCompId":5, "compsIdList":[4, 1]},
-                  {"type":"OneToManyDependency", "alphaCompId":4, "betaCompId":5, "number": 10}
+                  {"type":"OneToManyDependency", "alphaCompId":4, "betaCompId":5, "number": 10},
+                  {"type":"FullDeployment", "alphaCompId":5, "compsIdList":[4, 1]}
                   ]
 }
 

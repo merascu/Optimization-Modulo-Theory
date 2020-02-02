@@ -311,8 +311,8 @@ class Z3_Solver(ManeuverProblem):
                 self.solver.add(PbLe([(x, 1) for x in bvars], bound))
             else:
                 self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= bound
-                self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) <= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
+                self.solver.assert_and_track(PbLe([(x, 1) for x in bvars], bound), "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == ">=":
             if self.solverTypeOptimize:
@@ -320,8 +320,8 @@ class Z3_Solver(ManeuverProblem):
                 self.solver.add(PbGe([(x, 1) for x in bvars], bound))
             else:
                 self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound
-                self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) >= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
+                self.solver.assert_and_track(PbGe([(x, 1) for x in bvars], bound), "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == "=":
             if self.solverTypeOptimize:
@@ -346,15 +346,17 @@ class Z3_Solver(ManeuverProblem):
         """
         for i in range(len(compsIdList)): compsIdList[i] -= 1
         if self.solverTypeOptimize:
-            self.solver.add(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= lowerBound)
+            self.solver.add(PbGe(self.solver.add(
+                Or([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+                upperBound)))
         else:
             self.solver.assert_and_track(
                 PbGe(sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
                      lowerBound), "LabelRangeBound: " + str(self.labelIdx))
             self.labelIdx += 1
         if self.solverTypeOptimize:
-            PbLe(self.solver.add(Or([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
-            upperBound))
+            self.solver.add(PbLe(self.solver.add(Or([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]),
+            upperBound)))
         else:
             self.solver.assert_and_track(
                 sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= upperBound, "LabelRangeBound: " + str(self.labelIdx))

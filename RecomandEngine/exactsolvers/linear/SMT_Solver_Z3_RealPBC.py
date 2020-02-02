@@ -104,8 +104,9 @@ class Z3_Solver(ManeuverProblem):
                     bvars = [self.a[alphaCompId * self.nrVM + j], self.a[conflictCompId * self.nrVM + j]]
                     self.solver.add(PbLe([(x, 1) for x in bvars], 1))
                 else:
-                    self.solver.assert_and_track(PbLe(
-                        sum([self.a[alphaCompId * self.nrVM + j], self.a[conflictCompId * self.nrVM + j]]), 1), "LabelConflict: " + str(self.labelIdx_conflict))
+                    bvars = [self.a[alphaCompId * self.nrVM + j], self.a[conflictCompId * self.nrVM + j]]
+                    self.solver.add(PbLe([(x, 1) for x in bvars], 1))
+                    self.solver.assert_and_track(PbLe([(x, 1) for x in bvars], 1), "LabelConflict: " + str(self.labelIdx_conflict))
                     self.labelIdx_conflict += 1
 
     def RestrictionOneToOneDependency(self, alphaCompId, betaCompId):
@@ -223,18 +224,23 @@ class Z3_Solver(ManeuverProblem):
                 bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
                 self.solver.add(PbLe([(x, 1) for x in bvars], bound))
             else:
-                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) <= bound
+                bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
+                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = \
+                    PbLe([(x, 1) for x in bvars], bound)
                 self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) <= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                    PbLe([(x, 1) for x in bvars], bound), "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == ">=":
             if self.solverTypeOptimize:
                 bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
                 self.solver.add(PbGe([(x, 1) for x in bvars], bound))
             else:
-                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = sum([self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]) >= bound
+                bvars = [self.a[compId * self.nrVM + j] for compId in compsIdList for j in range(self.nrVM)]
+                self.solver.add(PbGe([(x, 1) for x in bvars], bound))
+                self.__constMap[str("LabelUpperLowerEqualBound" + str(self.labelIdx))] = \
+                    PbGe([(x, 1) for x in bvars], bound)
                 self.solver.assert_and_track(
-                    sum([If(self.a[compId * self.nrVM + j], 1, 0) for compId in compsIdList for j in range(self.nrVM)]) >= bound, "LabelUpperLowerEqualBound" + str(self.labelIdx))
+                    PbGe([(x, 1) for x in bvars], bound), "LabelUpperLowerEqualBound" + str(self.labelIdx))
                 self.labelIdx += 1
         elif operator == "=":
             if self.solverTypeOptimize:

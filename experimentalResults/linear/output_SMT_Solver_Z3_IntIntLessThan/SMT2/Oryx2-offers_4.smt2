@@ -1,5 +1,5 @@
-(declare-fun C1_VM2 () Int)
 (declare-fun C1_VM1 () Int)
+(declare-fun C1_VM2 () Int)
 (declare-fun C1_VM3 () Int)
 (declare-fun C1_VM4 () Int)
 (declare-fun C1_VM5 () Int)
@@ -13,8 +13,8 @@
 (declare-fun C2_VM2 () Int)
 (declare-fun C2_VM3 () Int)
 (declare-fun C2_VM4 () Int)
-(declare-fun C2_VM6 () Int)
 (declare-fun C2_VM5 () Int)
+(declare-fun C2_VM6 () Int)
 (declare-fun C2_VM7 () Int)
 (declare-fun C2_VM8 () Int)
 (declare-fun C2_VM9 () Int)
@@ -2351,5 +2351,3 @@
    PriceProv10
    PriceProv11))
 (check-sat)
-(get-objectives)
-(exit)

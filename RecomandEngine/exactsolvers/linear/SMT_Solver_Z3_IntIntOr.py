@@ -69,6 +69,35 @@ class Z3_Solver(ManeuverProblem):
            # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
            self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0, self.PriceProv[j] == 0))
 
+        print("a=")
+        print(self.a)
+        for j in range(self.nrComp-1):
+            for k in range(j+1, self.nrComp):
+                lst1 = [self.a[i+j] for i in range(0, len(self.a), self.nrVM)]
+                lst2 = [self.a[i+k] for i in range(0, len(self.a), self.nrVM)]
+                print("lst1", lst1)
+                print("lst2", lst2)
+            f = []
+            # for i in range(len(lst)-1):
+            #     f.append(Or(lst[i] < lst[i+1], And(lst[i] < lst[i+1]))
+            #
+            #     a11 < a21 | | (a11 == a21 & & a12 <= a22)
+
+
+        for j in range(self.nrVM):
+            lst = [self.a[i + j] for i in range(0, len(self.a), self.nrComp)]
+            print("lst2", lst)
+
+           #  f = []
+           #  for i in range(len(lst)-1):
+           #      print("-->", lst[i]>=lst[i+1])
+           #      f.append(lst[i]>=lst[i+1])
+           #
+           #  self.solver.add(f)
+           # # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
+           # #self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0, self.PriceProv[j] == 0))
+
+
         # encode offers
         for t in range(len(self.availableConfigurations)):
             for j in range(self.nrVM):
@@ -410,7 +439,7 @@ class Z3_Solver(ManeuverProblem):
                 l = []
                 for k in range(self.nrVM):
                     l.append(model[self.a[i * self.nrVM + k]])
-                #print(l)
+                print(l)
             ll = []
             for k in range(self.nrVM):
                 ll.append(model[self.PriceProv[k]]/1000.)

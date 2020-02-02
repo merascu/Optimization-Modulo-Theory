@@ -40,6 +40,23 @@ class ManeuverProblem:
         :return:
         """
 
+        if solver == "SMT_Solver_Z3_RealSymBreak" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealSymBreak
+            SMTSolver = SMT_Solver_Z3_RealSymBreak.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_IntBool" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntBool
+            SMTSolver = SMT_Solver_Z3_IntBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+        if solver == "SMT_Solver_Z3_FD" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_FD
+            SMTSolver = SMT_Solver_Z3_FD.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
+
+        if solver == "SMT_Solver_Z3_RealRealME" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealRealME
+            SMTSolver = SMT_Solver_Z3_RealRealME.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+
         if solver == "SMT_Solver_Z3_RealBool" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealBool
             SMTSolver = SMT_Solver_Z3_RealBool.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
@@ -81,12 +98,22 @@ class ManeuverProblem:
         if solver == "SMT_Solver_Z3_RealPBC" and option == "nonlinear":
             sys.exit("No support for nonlinear PBC")
 
+        if solver == "SMT_Solver_Z3_IntIntOrSymBreaking" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_IntIntOrSymBreaking
+            SMTSolver = SMT_Solver_Z3_IntIntOrSymBreaking.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self,
+                                                                       solver_type)
+
+        if solver == "SMT_Solver_Z3_RealPBCSymBreaking" and option == "linear":
+            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealPBCSymBreaking
+            SMTSolver = SMT_Solver_Z3_RealPBCSymBreaking.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self,
+                                                                       solver_type)
 
         if solver == "SMT_Solver_Z3_RealPBCMultiObjectives" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealPBCMultiObjectives
             SMTSolver = SMT_Solver_Z3_RealPBCMultiObjectives.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
         if solver == "SMT_Solver_Z3_RealPBCMultiObjectives" and option == "nonlinear":
             sys.exit("No support for nonlinear PBC")
+
 
         if SMTSolver.availableConfigurations is not None:
             self.restrictionsList.append(

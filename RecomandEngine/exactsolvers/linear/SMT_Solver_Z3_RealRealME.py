@@ -52,22 +52,22 @@ class Z3_Solver(ManeuverProblem):
         self.StorageProv = [Real('StorageProv%i' % j) for j in range(1, self.nrVM + 1)]
         self.PriceProv = [Real('PriceProv%i' % j) for j in range(1, self.nrVM + 1)]
 
-        self.E  = [Bool('E%i_%i' % (i + 1, j + 1)) for i in range(self.nrComp) for j in range(self.nrVM-1)]
-        self.LT = [Bool('LT%i_%i' % (i + 1, j + 1)) for i in range(self.nrComp) for j in range(self.nrVM - 1)]
+        # self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
+        # # elements of VM should be positive
+        # for i in range(len(self.vm)):
+        #     self.solver.add(Or([self.vm[i] == 0, self.vm[i] == 1]))
+        #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
 
-        #self.vm = [Int('VM%i' % j) for j in range(1, self.nrVM + 1)]
-        # elements of VM should be positive
-        #for i in range(len(self.vm)):
-        #    self.solver.add(Or([self.vm[i] == 0, self.vm[i] == 1]))
 
         self.a = [Real('C%i_VM%i' % (i + 1, j + 1)) for i in range(self.nrComp) for j in range(self.nrVM)]
 
         # elements of the association matrix should be just 0 or 1
         for i in range(len(self.a)):
             self.solver.add(Or([self.a[i] == 0, self.a[i] == 1]))
-            self.solver.add(self.a[i] >=0)
-            self.solver.add(self.a[i] <=1)
-        #     #self.solver.add(Sum([If(self.a[i]==0,1,0), If(self.a[i]==1,1,0)])==1)
+
+        # for j in range(self.nrVM - 1):
+        #     lst = [self.a[i + j] for i in range(0, len(self.a), self.nrVM)]
+        #     self.solver.add(Implies(sum(lst)>=1, self.vm[j]>0))
 
         self.vmType = [Real('VM%iType' % j) for j in range(1, self.nrVM + 1)]
         #self.vmType = [Int('VM%iType' % j) for j in range(1, self.nrVM + 1)]
@@ -81,10 +81,10 @@ class Z3_Solver(ManeuverProblem):
         print("self.vmType ", self.vmType)
 
         #If a machine is not leased then its price is 0
-        '''for j in range(self.nrVM):
-           # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
-           self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0.0, self.PriceProv[j] == 0.0))
-        '''
+        # for j in range(self.nrVM):
+        #    # print(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]))
+        #    self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) == 0.0, self.PriceProv[j] == 0.0))
+
         for i in range(self.nrComp):
             for j in range(self.nrVM):
                 #print("i=", i, "j=", j, "???", Not(self.vmType[j] == 0))
@@ -117,47 +117,34 @@ class Z3_Solver(ManeuverProblem):
                                             ), "LabelOffer" + str(self.labelIdx_offer))
                     self.labelIdx_offer += 1
 
-        for j in range(self.nrVM-1):
-            #self.solver.add(self.vmType[j-1] <= self.vmType[j])
-            #self.solver.add(Implies(self.vmType[j] == 0, self.vmType[j-1] == 0))
+        #k=0
+        for j in range(self.nrVM - 1):
+            # Sym br type 1
+            self.solver.add(self.PriceProv[j] >= self.PriceProv[j + 1])
+            # adding the following takes more time but it will be accurate from the point of view of Type 1 sym for cols
+            # self.solver.add(self.vmType[j] >= self.vmType[j + 1])
+            # Sym br type 2
+            self.solver.add(Implies(self.vmType[j] == self.vmType[j + 1],
+                                    self.PriceProv[j] == self.PriceProv[j + 1]))
+            self.solver.add(Implies(self.vmType[j] == self.vmType[j+1],
+                                    self.ProcProv[j] == self.ProcProv[j + 1]))
+            self.solver.add(Implies(self.vmType[j] == self.vmType[j+1],
+                                    self.MemProv[j] == self.MemProv[j + 1]))
+            self.solver.add(Implies(self.vmType[j] == self.vmType[j+1],
+                                    self.StorageProv[j] == self.StorageProv[j + 1]))
+            #Sym br type 3 - 1
+            self.solver.add(Implies(self.vmType[j] == self.vmType[j+1],
+                                    sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >=
+                                      sum([self.a[i+j+1] for i in range(0, len(self.a), self.nrVM)])))
+            # Sym br type 3 - 2
+            for i in range(1, self.nrComp):
+                l= [self.a[u*self.nrVM + j] == self.a[u*self.nrVM + j+1] for u in range(0,i)]
+                l.append(self.vmType[j] == self.vmType[j+1])
+                #print("l", l)
+                self.solver.add(Implies(And(l), self.a[i*self.nrVM + j] <= self.a[i*self.nrVM + j+1]))
 
-            self.solver.add(self.PriceProv[j] <= self.PriceProv[j+1])
-            self.solver.add(Implies(self.PriceProv[j] == self.PriceProv[j+1],
-                            Or(self.E[(self.nrComp -1 ) * (self.nrVM-1) + j], self.LT[(self.nrComp -1 ) * (self.nrVM-1) + j])))
-            for i in range(self.nrComp):
-                if (i == 0):
-                    self.solver.add(Implies(self.a[i * self.nrVM + j] == self.a[i * self.nrVM + j+1], self.E[i * (self.nrVM-1) + j]))
-                    self.solver.add(
-                        Implies(self.E[i * (self.nrVM-1) + j], self.a[i * self.nrVM + j] == self.a[i * self.nrVM + j + 1]))
 
-                    self.solver.add(
-                        Implies(self.a[i * self.nrVM + j] > self.a[i * self.nrVM + j + 1], self.LT[i * (self.nrVM-1) + j]))
-                    self.solver.add(
-                        Implies(self.LT[i * (self.nrVM-1) + j], self.a[i * self.nrVM + j] > self.a[i * self.nrVM + j + 1]))
-
-
-                else:
-                    self.solver.add(
-                        Implies(And(self.a[i * self.nrVM + j] == self.a[i * self.nrVM + j + 1], self.E[i * (self.nrVM-1) + j-1]),
-                                self.E[i * (self.nrVM-1) + j]))
-                    self.solver.add(
-                        Implies(self.E[i * (self.nrVM-1) + j],
-                                And(self.a[i * self.nrVM + j] == self.a[i * self.nrVM + j + 1],
-                                    self.E[i * (self.nrVM-1) + j - 1])
-                                ))
-
-                    self.solver.add(
-                        Implies(Or(self.LT[i * (self.nrVM-1) + j -1],
-                                   And(self.a[i * self.nrVM + j] > self.a[i * self.nrVM + j + 1],
-                                    self.E[i * (self.nrVM-1) + j - 1])),
-                                self.LT[i * (self.nrVM-1) + j]))
-                    self.solver.add(
-                        Implies(self.LT[i * (self.nrVM-1) + j], Or(self.LT[i * (self.nrVM-1) + j -1],
-                                   And(self.a[i * self.nrVM + j] > self.a[i * self.nrVM + j + 1],
-                                    self.E[i * (self.nrVM-1) + j - 1])))
-                                )
-
-        # not needed If a machine is leased then its assignment vector is 1
+        #not needed If a machine is leased then its assignment vector is 1
         # for j in range(self.nrVM):
         #     if self.solverTypeOptimize:
         #         self.solver.add(Implies(sum([self.a[i+j] for i in range(0, len(self.a), self.nrVM)]) >= 1, self.vm[j] == 1))
@@ -173,6 +160,7 @@ class Z3_Solver(ManeuverProblem):
         :param conflictCompsIdList: id of the second conflict component
         :return: None
         """
+        print("conflictCompsIdList ",conflictCompsIdList)
         for compId in conflictCompsIdList:
             compId += 1
 

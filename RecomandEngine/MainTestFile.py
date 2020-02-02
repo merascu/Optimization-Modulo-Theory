@@ -13,6 +13,7 @@ def read_available_configurations(fileConfigurations):
     with open(fileConfigurations) as json_data:
         dictionary = json.load(json_data)
 
+    price = set()
     availableConfigurations = []
     for key, value in dictionary.items():
         l = [key]
@@ -20,8 +21,10 @@ def read_available_configurations(fileConfigurations):
         l.append(value["memory"])
         l.append(value["storage"])
         l.append(value["price"])
+        price.add(value["price"])
         availableConfigurations.append(l)
-    print(availableConfigurations)
+    print("offer len", len(availableConfigurations), "distinct prices", len(price))
+
     return availableConfigurations
 
 def runZ3(problem_file_name, configurations_file_name, solver, option):
@@ -60,6 +63,7 @@ def runZ3(problem_file_name, configurations_file_name, solver, option):
                 exit(1)
 
             availableConfigurations = read_available_configurations(configurations_file_name)
+            print("restrictionsList ", mp.restrictionsList)
             mp.priceOffersFile = configurations_file_name
             minPrice, priceVMs, t = mp.solveSMT(availableConfigurations, smt2lib, smt2libsol, "optimize", solver, option)
             print("min price = {}, price vm = {}, time = {}".format(minPrice, priceVMs, t))
@@ -69,13 +73,22 @@ def runZ3(problem_file_name, configurations_file_name, solver, option):
 
 if __name__ == "__main__":
 
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
+    #    "SMT_Solver_Z3_RealRealME", "linear")
 
-    #runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
-    #    "SMT_Solver_Z3_RealPBC", "linear")
+    runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_20.json",
+       "SMT_Solver_Z3_RealRealME", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_RealRealME", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_RealRealME", "linear")
+
+# runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
+    #       "SMT_Solver_Z3_RealPBCSymBreaking", "linear")
 
      #benchmarks_Z3("../experimentalResults", "../benchmarks/output_Z3", "linear")
 
-     benchmarks_OptiMathSAT("../experimentalResults", "../benchmarks/output_OptiMathSAT", "linear")
+     #benchmarks_OptiMathSAT("../experimentalResults", "../benchmarks/output_OptiMathSAT", "linear")
 
      #benchmarks_Z3("../experimentalResults", "../benchmarks/output_Z3", "nonlinear")
 
