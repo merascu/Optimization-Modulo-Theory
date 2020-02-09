@@ -1,3 +1,4 @@
+###### Generation of some formulae for SMT-RAT; not used in any tests #####
 from z3 import *
 from RecomandEngine.problem.ProblemDefinition import ManeuverProblem
 import time

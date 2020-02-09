@@ -1,3 +1,7 @@
+######################################################################################################
+# Generation of the formulae in finite domain because z3 is able to handle them more effciently; #####
+# in the end, z3 could not detect the special case so this encoding was not used anymore #############
+######################################################################################################
 from z3 import *
 from RecomandEngine.problem.ProblemDefinition import ManeuverProblem
 

@@ -54,8 +54,8 @@ class ManeuverProblem:
 
 
         if solver == "SMT_Solver_Z3_RealRealME" and option == "linear":
-            from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealRealME
-            SMTSolver = SMT_Solver_Z3_RealRealME.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
+            from RecomandEngine.exactsolvers.linear import IntIntOrSymBreaking
+            SMTSolver = IntIntOrSymBreaking.Z3_Solver(self.nrVM, self.nrComp, availableConfigs, self, solver_type)
 
         if solver == "SMT_Solver_Z3_RealBool" and option == "linear":
             from RecomandEngine.exactsolvers.linear import SMT_Solver_Z3_RealBool

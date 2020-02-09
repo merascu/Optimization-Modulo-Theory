@@ -72,16 +72,163 @@ def runZ3(problem_file_name, configurations_file_name, solver, option):
         csvfile.close()
 
 if __name__ == "__main__":
-
-    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
-    #    "SMT_Solver_Z3_RealRealME", "linear")
-
-    runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_20.json",
-       "SMT_Solver_Z3_RealRealME", "linear")
+    ############# IntIntOr #############
     # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_20.json",
-    #       "SMT_Solver_Z3_RealRealME", "linear")
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    #
+
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
     # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_20.json",
-    #       "SMT_Solver_Z3_RealRealME", "linear")
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOr", "linear")
+
+    ############# IntIntOrSymBreaking #############
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureBillingEmail.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    #
+
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress5.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_20.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_40.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_100.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_250.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
+    # runZ3("../testInstances/Wordpress6.json", "../testInstances/offersLPAR2018/offers_500.json",
+    #       "SMT_Solver_Z3_IntIntOrSymBreaking", "linear")
 
 # runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersICCP2018/offers_4.json",
     #       "SMT_Solver_Z3_RealPBCSymBreaking", "linear")
