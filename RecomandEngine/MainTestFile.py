@@ -76,7 +76,7 @@ if __name__ == "__main__":
     # runZ3("../testInstances/Wordpress3.json", "../testInstances/offersICCP2018/offers_4.json",
     #    "SMT_Solver_Z3_RealRealME", "linear")
 
-    runZ3("../testInstances/Wordpress4.json", "../testInstances/offersLPAR2018/offers_20.json",
+    runZ3("../testInstances/SecureWebContainer.json", "../testInstances/offersLPAR2018/offers_20.json",
        "SMT_Solver_Z3_RealRealME", "linear")
     # runZ3("../testInstances/Oryx2.json", "../testInstances/offersLPAR2018/offers_20.json",
     #       "SMT_Solver_Z3_RealRealME", "linear")
